@@ -1,0 +1,4 @@
+#!/bin/bash
+echo -e "
+$(date +"%Y-%m-%d") $(date +"%T") $1"
+exit 0
