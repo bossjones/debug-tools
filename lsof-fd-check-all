@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# SOURCE: https://lzone.de/cheat-sheet/ulimit
+
+echo "Check nofile w/ hardlimits Per Process"
+echo ""
+
+lsof -n 2>/dev/null | awk '{print $1,$2}' | sort | uniq -c | sort -nr | while read nr name pid ; do printf "%10d / %-10d %-15s (PID %5s)\n" $nr $(cat /proc/$pid/limits | grep 'open files' | awk '{print $5}') $name $pid; done

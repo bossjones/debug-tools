@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# SOURCE: https://github.com/steelsquid/steelsquid-kiss-os/blob/d5f578f4a6f752b12a0be179809f30dfa8b2cbd2/steelsquid-kiss-os.sh
+if [ -z "$1" ]; then
+    ps -eo sid,user,nice,rss,pcpu,command --sort pcpu
+else
+    ps -eo sid,user,nice,rss,pcpu,command --sort pcpu | grep -i "SID USER\|$1"
+fi
+exit 0
