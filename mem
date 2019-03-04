@@ -1,0 +1,15 @@
+#!/bin/bash
+ram_total=$(cat /proc/meminfo | grep MemTotal: | awk '{print $2}')
+ram_free=$(cat /proc/meminfo | grep MemFree: | awk '{print $2}')
+tmp_buffers=$(cat /proc/meminfo | grep Buffers: | awk '{print $2}')
+tmp_cached=$(cat /proc/meminfo | grep Cached: | awk 'NR == 1'  | awk '{print $2}')
+ram_free=$(( $ram_free + $tmp_buffers + $tmp_cached ))
+ram_used=$(( ($ram_total - $ram_free)/1000 ))
+ram_free=$(( $ram_free/1000 ))
+ram_total=$(( $ram_total/1000 ))
+echo
+echo "Total RAM: $ram_total MB"
+echo "Used RAM: $ram_used MB"
+echo "Free RAM: $ram_free MB"
+echo
+exit 0
