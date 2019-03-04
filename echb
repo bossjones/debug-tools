@@ -1,0 +1,5 @@
+#!/bin/bash
+tput bold
+echo -e $@
+tput sgr0
+exit 0
