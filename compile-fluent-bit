@@ -58,6 +58,10 @@ TimeoutStartSec=0
 EnvironmentFile=/etc/environment
 Environment="LD_PRELOAD=/usr/lib/libjemalloc.so.2"
 
+LimitMEMLOCK=infinity
+# LimitNOFILE=524288
+LimitNOFILE=20288
+
 EOF
 
 echo "-----------------------------------------------------"
