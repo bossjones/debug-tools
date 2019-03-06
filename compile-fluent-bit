@@ -1,23 +1,75 @@
 #!/bin/bash
 
-cd /usr/local/src
+apt-get update
+apt-get upgrade -y
+# apt-get install libjemalloc1 libjemalloc-dev -y
+apt-get install libsystemd-dev -y
+apt-get install libsystemd0 cmake -y
+
+apt-get remove -y libjemalloc-dev libjemalloc1
+
+apt-get install -y libgtest-dev doxygen graphviz
+apt-get install cmake libgtest-dev -y
+
+export JEMALLOC_VERSION=4.5.0
+export FLUENTD_VERSION1.0.4
+
+wget -O /tmp/jemalloc-$JEMALLOC_VERSION.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/$JEMALLOC_VERSION/jemalloc-$JEMALLOC_VERSION.tar.bz2 && \
+cd /tmp && tar -xjf jemalloc-$JEMALLOC_VERSION.tar.bz2 && cd jemalloc-$JEMALLOC_VERSION/ && \
+./configure && make && \
+mv lib/libjemalloc.so.2 /usr/lib
+
+ldconfig
+
+export LD_PRELOAD="/usr/lib/libjemalloc.so.2"
+
+# https://github.com/AppImage/AppImageKit/issues/571
+cd /usr/src/gtest
+cmake CMakeLists.txt
+make
+# copy or symlink libgtest.a and libgtest_main.a to your /usr/lib folder
+cp *.a /usr/lib
+
+
 
 curl -L 'https://fluentbit.io/releases/1.0/fluent-bit-1.0.4.tar.gz' > /usr/local/src/fluent-bit-1.0.4.tar.gz
 pushd /usr/local/src
 tar -xvf fluent-bit-1.0.4.tar.gz
-
-apt-get update
-apt-get install libjemalloc1 libjemalloc-dev -y
-apt-get install libsystemd-dev -y
-apt-get install libsystemd0 cmake -y
-
-# cd fluent-bit-1.0.4
-# cd build
-# cmake ../
-# make
-# make install
+cd /usr/local/src
+cd fluent-bit-1.0.4
+mkdir build
+cd build
 cmake ../ -DFLB_ALL=yes -DFLB_JEMALLOC=yes
 make
 make install
 
-# apt-get install --reinstall
+echo "-----------------------------------------------------"
+echo "[run] cat /lib/systemd/system/fluent-bit.service"
+echo "-----------------------------------------------------"
+cat /lib/systemd/system/fluent-bit.service
+echo "-----------------------------------------------------"
+echo ""
+
+mkdir -p /etc/systemd/system/fluent-bit.service.d
+cat <<EOF >/etc/systemd/system/fluent-bit.service.d/perf.conf
+[Service]
+Restart=on-failure
+RestartSec=20
+TimeoutStartSec=0
+EnvironmentFile=/etc/environment
+Environment="LD_PRELOAD=/usr/lib/libjemalloc.so.2"
+
+EOF
+
+echo "-----------------------------------------------------"
+echo "[run] cat /etc/systemd/system/fluent-bit.service.d/perf.conf"
+echo "-----------------------------------------------------"
+cat /etc/systemd/system/fluent-bit.service.d/perf.conf
+echo "-----------------------------------------------------"
+echo ""
+
+
+systemctl daemon-reload
+systemctl fluent-bit restart
+systemctl fluent-bit enable
+
