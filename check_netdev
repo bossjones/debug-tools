@@ -3,4 +3,9 @@
 sysctl -a | grep "netdev_max_backlog\|netdev_budget_usecs\|netdev_budget\|net.core.dev_weight\|net.core.netdev_max_backlog"
 
 
-# sysctl -w net.core.netdev_budget_usecs
+# sysctl -w net.core.netdev_budget 600
+
+# SOURCE: https://www.techrepublic.com/article/how-to-enable-tcp-bbr-to-improve-network-speed-on-linux/
+# sysctl -w net.core.default_qdisc=fq
+# sysctl -w net.ipv4.tcp_congestion_control=bbr
+# sysctl -w net.core.somaxconn=256
