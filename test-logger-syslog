@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# SOURCE: https://github.com/steelsquid/steelsquid-kiss-os/blob/d5f578f4a6f752b12a0be179809f30dfa8b2cbd2/steelsquid-kiss-os.sh
+
+
+for i in {1..200}; do
+    sleep 1
+    logger -u /tmp/in_syslog my_ident my_message
+done
+
