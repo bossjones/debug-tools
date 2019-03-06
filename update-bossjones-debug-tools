@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+pushd /usr/local/src/debug-tools
+git pull && \
+make copy;
+popd
+exit 0
