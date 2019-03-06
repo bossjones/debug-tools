@@ -1,0 +1,21 @@
+#!/bin/bash
+
+cd /usr/local/src
+
+curl -L 'https://fluentbit.io/releases/1.0/fluent-bit-1.0.4.tar.gz' > /usr/local/src/fluent-bit-1.0.4.tar.gz
+pushd /usr/local/src
+tar -xvf fluent-bit-1.0.4.tar.gz
+
+apt-get update
+apt-get install libjemalloc1 libjemalloc-dev -y
+apt-get install libsystemd-dev -y
+apt-get install libsystemd0 cmake -y
+
+# cd fluent-bit-1.0.4
+# cd build
+# cmake ../
+# make
+# make install
+# cmake ../ -DFLB_ALL=yes -DFLB_JEMALLOC=yes
+# make
+# sudo make install
