@@ -16,6 +16,8 @@ apt-get install libsystemd0 cmake -y
 # cmake ../
 # make
 # make install
-# cmake ../ -DFLB_ALL=yes -DFLB_JEMALLOC=yes
-# make
-# sudo make install
+cmake ../ -DFLB_ALL=yes -DFLB_JEMALLOC=yes
+make
+make install
+
+# apt-get install --reinstall
