@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+if command -v docker && systemctl is-active docker; then
+    echo "------------------------------------------------------------------------------------------------------"
+    echo ""
+    echo ""
+    echo "+ docker ps --all --size"
+    docker ps --all --size
+    echo "------------------------------------------------------------------------------------------------------"
+    echo ""
+    echo ""
+    echo "+ docker images --all"
+    docker images --all
+    echo "------------------------------------------------------------------------------------------------------"
+    echo ""
+    echo ""
+    echo "+ docker volume ls"
+    docker volume ls
+    echo "------------------------------------------------------------------------------------------------------"
+    echo ""
+    echo ""
+    echo "+ docker stats --all --no-stream"
+    docker stats --all --no-stream
+    echo "------------------------------------------------------------------------------------------------------"
+    echo ""
+    echo ""
+    echo "+ docker info"
+    docker info
+    echo "------------------------------------------------------------------------------------------------------"
+    echo ""
+    echo ""
+    for cont in $(docker ps -a | awk {'print $NF'} | grep -v NAMES); do
+        echo "-----------------------------------------------------CONTAINER - ${cont}--------------------------------------------"
+        echo ""
+        echo ""
+        echo "+ docker top $cont auxw"
+        docker top "$cont" auxw
+        echo "+ docker exec $cont top -bwn1"
+        docker exec "$cont" top -bwn1
+        echo "+ docker inspect $cont"
+        docker inspect "$cont"
+        docker logs "$cont"
+        echo "+ docker exec -it --user root $cont /usr/bin/dpkg -l"
+        docker exec -it --user root "${cont}" /usr/bin/dpkg -l
+        echo ""
+        echo ""
+    done;
+fi

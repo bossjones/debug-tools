@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+(for NS in $(ip netns list); do
+echo "==== $NS ====";
+ip netns exec $NS ip a;
+ip netns exec $NS ip r;
+ip netns exec $NS ip iptables-save;
+PIDS="$(ip netns pids $NS)";
+[[ ! -z "$PIDS" ]] && ps --no-headers -f --pids "$PIDS";
+echo "";
+done)

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+systemctl -t service --failed --no-legend | awk '{print $1}' | xargs -r -n1 journalctl --no-pager -u
