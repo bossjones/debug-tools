@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 
 sysctl -a | grep "netdev_max_backlog\|netdev_budget_usecs\|netdev_budget\|net.core.dev_weight\|net.core.netdev_max_backlog"
+
+
+# sysctl -w net.core.netdev_budget_usecs
