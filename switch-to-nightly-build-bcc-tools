@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+apt-get update
+apt-get install bcc-tools libbcc-examples linux-headers-$(uname -r) -y
+apt remove bcc-tools libbcc-examples -y
+apt-get autoremove -y
+echo "deb [trusted=yes] https://repo.iovisor.org/apt/xenial xenial-nightly main" | sudo tee /etc/apt/sources.list.d/iovisor.list.list
+apt-get update
+apt-get install bcc-tools libbcc-examples linux-headers-$(uname -r) -y
