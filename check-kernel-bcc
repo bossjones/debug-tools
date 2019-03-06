@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# SOURCE: https://github.com/goldshtn/dotfiles/blob/3fdfbc4985eee14c5843e2dc6264f86d43a078cd/install-kernel.sh
+
+source /usr/local/bin/color-echo-helper
+
+function die {
+	echo >&2 "$@"
+	exit 1
+}
+
+# SOURCE: In general, to use these features, a Linux kernel version 4.1 or newer is required. In addition, the kernel should have been compiled with the following flags set:
+
+# CONFIG_BPF=y
+# CONFIG_BPF_SYSCALL=y
+# # [optional, for tc filters]
+# CONFIG_NET_CLS_BPF=m
+# # [optional, for tc actions]
+# CONFIG_NET_ACT_BPF=m
+# CONFIG_BPF_JIT=y
+# CONFIG_HAVE_BPF_JIT=y
+# # [optional, for kprobes]
+# CONFIG_BPF_EVENTS=y
+
+echo "Checking BPF config flags..."
+for flag in CONFIG_BPF CONFIG_BPF_SYSCALL CONFIG_NET_CLS_BPF CONFIG_NET_ACT_BPF CONFIG_BPF_JIT CONFIG_HAVE_BPF_JIT CONFIG_BPF_EVENTS; do
+    sysver=$(uname -r)
+    present=`sudo cat /boot/config-$sysver | grep $flag= | cut -d= -f2`
+    [[ "$present" = "y" ]] && cecho " [present] $flag" $green || cecho " [missing] $flag" $red
+done
+
+echo
+
+# CONFIG_NET_SCH_SFQ=m
+# CONFIG_NET_ACT_POLICE=m
+# CONFIG_NET_ACT_GACT=m
+# CONFIG_DUMMY=m
+# CONFIG_VXLAN=m
+
+echo "Checking networking BPF config flags..."
+for flag in CONFIG_NET_SCH_SFQ CONFIG_NET_ACT_POLICE CONFIG_NET_ACT_GACT CONFIG_DUMMY CONFIG_VXLAN; do
+    sysver=$(uname -r)
+    present=`sudo cat /boot/config-$sysver | grep $flag= | cut -d= -f2`
+    [[ "$present" = "y" ]] && cecho " [present] $flag" $green || cecho " [missing] $flag" $red
+done
+
+echo
+
+exit 0
+

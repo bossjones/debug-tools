@@ -1,0 +1,18 @@
+#!/bin/bash
+
+mkdir ~/dev/
+cd ~/dev
+git clone https://github.com/cilium/bpf-ci-scripts.git
+
+# SOURCE: https://github.com/kameshrao/Container-performance/blob/a2fa88301e1afaa217ae6f6a528f9a1aa2e2afc4/setup-fedora.sh
+echo "Cloning GitHub repos to build from source..."
+git clone --depth=1 https://github.com/goldshtn/linux-tracing-workshop labs
+git clone https://github.com/iovisor/bcc
+git clone --depth=1 https://github.com/brendangregg/FlameGraph
+git clone --depth=1 https://github.com/nodejs/node
+git clone --depth=1 https://github.com/postgres/postgres
+git clone --depth=1 https://github.com/MariaDB/server mariadb
+git clone --depth=1 https://github.com/jrudolph/perf-map-agent
+git clone --depth=1 https://github.com/brendangregg/perf-tools
+git clone --depth=1 https://github.com/goldshtn/slodns
+git clone --depth=1 https://github.com/jvm-profiling-tools/async-profiler
