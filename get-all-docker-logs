@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
 
-for i in $(docker ps -a --format="{{.Names}}"); do docker logs "${i}"; done
+for i in $(docker ps -a --format="{{.Names}}"); do
+    /usr/local/bin/boss-log
+    echo ""
+    docker logs "${i}";
+    echo ""
+done
