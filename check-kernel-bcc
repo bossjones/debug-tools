@@ -41,7 +41,7 @@ echo "Checking networking BPF config flags..."
 for flag in CONFIG_NET_SCH_SFQ CONFIG_NET_ACT_POLICE CONFIG_NET_ACT_GACT CONFIG_DUMMY CONFIG_VXLAN; do
     sysver=$(uname -r)
     present=`sudo cat /boot/config-$sysver | grep $flag= | cut -d= -f2`
-    [[ "$present" = "y" ]] && cecho " [present] $flag" $green || cecho " [missing] $flag" $red
+    [[ "$present" = "y" ]] && cecho " [present] $flag" $GREEN || cecho " [missing] $flag" $RED
 done
 
 echo
