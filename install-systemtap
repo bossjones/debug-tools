@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# SOURCE: https://wiki.ubuntu.com/Kernel/Systemtap
+
+sudo apt-get install -y systemtap gcc
