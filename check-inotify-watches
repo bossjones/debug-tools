@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# SOURCE: https://unix.stackexchange.com/questions/13751/kernel-inotify-watch-limit-reached
+find /proc/*/fd -lname anon_inode:inotify | cut -d/ -f3 | xargs -I '{}' -- ps --no-headers -o '%p %U %c' -p '{}' | uniq -c | sort -nr
