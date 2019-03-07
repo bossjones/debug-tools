@@ -26,7 +26,7 @@ echo "Checking BPF config flags..."
 for flag in CONFIG_BPF CONFIG_BPF_SYSCALL CONFIG_NET_CLS_BPF CONFIG_NET_ACT_BPF CONFIG_BPF_JIT CONFIG_HAVE_BPF_JIT CONFIG_BPF_EVENTS; do
     sysver=$(uname -r)
     present=`sudo cat /boot/config-$sysver | grep $flag= | cut -d= -f2`
-    [[ "$present" = "y" ]] && cecho " [present] $flag" $green || cecho " [missing] $flag" $red
+    [[ "$present" = "y" ]] && cecho " [present] $flag" $GREEN || cecho " [missing] $flag" $RED
 done
 
 echo
