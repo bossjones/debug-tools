@@ -1,5 +1,9 @@
 #!/bin/bash
 
-echo "The first column indicates the number of inotify fds (not the number of watches though) and the second shows the PID of that process [sources: 1, 2]."
+source /usr/local/bin/color-echo-helper
+
+cecho " [run] The first column indicates the number of inotify fds (not the number of watches though) and the second shows the PID of that process [sources: 1, 2]." $GREEN
+echo
 # SOURCE: https://unix.stackexchange.com/questions/13751/kernel-inotify-watch-limit-reached
 find /proc/*/fd -lname anon_inode:inotify | cut -d/ -f3 | xargs -I '{}' -- ps --no-headers -o '%p %U %c' -p '{}' | uniq -c | sort -nr
+echo
