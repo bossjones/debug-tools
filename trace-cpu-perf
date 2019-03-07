@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# SOURCE: https://www.scylladb.com/2016/06/10/read-latency-and-scylla-jmx-process/
+
+source /usr/local/bin/color-echo-helper
+
+cecho "The trace can be collected on Linux using perf. For example, to collect the trace on all CPUs over the period of 6 seconds" $GREEN
+
+echo
+
+perf sched record -a sleep 6
+
+cecho "We can then produce a summary report with perf sched latency, which may look like the one below:" $GREEN
+
+perf sched latency -s max
+
+
+# This report shows basic information which can be used to determine if scheduling delays could be a problem. The column with maximum delay per process is most significant. From the above output we can see the Scylla server (scylla:34432) experienced a scheduling delay of up to 12.277 ms. This matches increase in latency we saw in the client-side latency profile.
+
+# The summary doesn’t show the culprit of the delay though. One can look at the output of perf sched map or the raw trace (perf sched script) to figure that out. That can be a tedious task so we wrote our own scripts to post-process the trace and summarize it in a more approachable way.
+
+# We can produce a cumulative histogram of scheduling delays for the Scylla server, which looks like this:
+
+
+cecho "The summary doesn’t show the culprit of the delay though. (use perf sched map)" $GREEN
+
+echo
+
+perf sched map
+
+
+cecho "The summary doesn’t show the culprit of the delay though. (use perf sched script)" $GREEN
+
+echo
+
+perf sched script
