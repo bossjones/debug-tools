@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# SOURCE: https://github.com/kubernetes/kubernetes/issues/63951
+
+perf top -p $(sudo ps aux | grep kubelet| awk 'NR==1{print $2}')

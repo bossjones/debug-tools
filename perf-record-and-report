@@ -1,0 +1,36 @@
+#!/bin/bash
+
+source /usr/local/bin/color-echo-helper
+
+# SOURCE: https://github.com/mesosphere/kubernetes-mesos/issues/151
+
+# SOURCE: http://www.brendangregg.com/blog/2017-03-16/perf-sched.html
+
+# perf record
+
+echo " [run] perf record for 15 seconds "
+cecho " [cmd] perf sched record -- sleep 15" $GREEN
+perf sched record -- sleep 15
+echo
+
+echo " [run] perf script header "
+cecho " [cmd] perf script --header" $GREEN
+perf script --header
+echo
+
+echo " [run] perf sched latency "
+cecho " [cmd] perf sched latency" $GREEN
+perf sched latency
+echo
+
+echo " [run] perf report --stdio --sort=comm,dso "
+cecho " [cmd] perf report --stdio --sort=comm,dso" $GREEN
+perf report --stdio --sort=comm,dso
+echo
+
+# perf report --stdio --dsos=libmesos-0.21.0.so
+
+echo " [run] perf report "
+cecho " [cmd] perf report" $GREEN
+perf report
+echo
