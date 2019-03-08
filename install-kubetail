@@ -1,0 +1,9 @@
+#!/bin/bash
+
+curl -L 'https://raw.githubusercontent.com/johanhaleby/kubetail/master/kubetail' > /usr/local/bin/kubetail
+
+chmod +x /usr/local/bin/kubetail
+
+curl -L 'https://raw.githubusercontent.com/johanhaleby/kubetail/master/completion/kubetail.bash' > /etc/bash_completion.d/kubetail.bash
+
+chmod +x /etc/bash_completion.d/kubetail.bash
