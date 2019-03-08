@@ -2,4 +2,4 @@
 
 curl -L 'https://raw.githubusercontent.com/spotify/docker-gc/master/docker-gc' > /usr/local/bin/docker-gc
 
-chmod + x /usr/local/bin/docker-gc
+chmod +x /usr/local/bin/docker-gc
