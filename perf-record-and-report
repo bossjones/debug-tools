@@ -34,3 +34,16 @@ cecho " [run] perf report " $GREEN
 cecho " [cmd] perf report" $BLUE
 perf report
 echo
+
+
+
+cecho " [run] shows the scheduler latency by event, including the time the task was waiting to be woken up (wait time) and the scheduler latency after wakeup to running (sch delay) " $GREEN
+cecho " [cmd] perf sched timehist" $BLUE
+perf sched timehist
+echo
+
+
+cecho " [run] dumps all events (similar to perf script) " $GREEN
+cecho " [cmd] perf sched script " $BLUE
+perf sched script
+echo
