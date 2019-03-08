@@ -1,0 +1,9 @@
+#!/bin/bash
+
+export CLEAN_UP_VOLUMES=1
+export GRACE_PERIOD_SECONDS=1800
+export MINIMUM_IMAGES_TO_SAVE=1
+export FORCE_IMAGE_REMOVAL=1
+export FORCE_CONTAINER_REMOVAL=1
+
+/usr/local/bin/docker-gc
