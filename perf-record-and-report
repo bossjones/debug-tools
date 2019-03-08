@@ -10,7 +10,7 @@ source /usr/local/bin/color-echo-helper
 
 cecho " [run] perf record for 15 seconds " $GREEN
 cecho " [cmd] perf sched record -- sleep 15" $BLUE
-perf sched record -- sleep 15
+perf sched record -- sleep 2
 echo
 
 cecho " [run] perf script header " $GREEN
