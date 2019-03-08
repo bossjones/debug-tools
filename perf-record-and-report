@@ -8,29 +8,29 @@ source /usr/local/bin/color-echo-helper
 
 # perf record
 
-echo " [run] perf record for 15 seconds "
-cecho " [cmd] perf sched record -- sleep 15" $GREEN
+cecho " [run] perf record for 15 seconds " $GREEN
+cecho " [cmd] perf sched record -- sleep 15" $BLUE
 perf sched record -- sleep 15
 echo
 
-echo " [run] perf script header "
-cecho " [cmd] perf script --header" $GREEN
+cecho " [run] perf script header " $GREEN
+cecho " [cmd] perf script --header" $BLUE
 perf script --header
 echo
 
-echo " [run] perf sched latency "
-cecho " [cmd] perf sched latency" $GREEN
+cecho " [run] perf sched latency will summarize scheduler latencies by task, including average and maximum delay " $GREEN
+cecho " [cmd] perf sched latency" $BLUE
 perf sched latency
 echo
 
-echo " [run] perf report --stdio --sort=comm,dso "
-cecho " [cmd] perf report --stdio --sort=comm,dso" $GREEN
+cecho " [run] perf report --stdio --sort=comm,dso " $GREEN
+cecho " [cmd] perf report --stdio --sort=comm,dso" $BLUE
 perf report --stdio --sort=comm,dso
 echo
 
 # perf report --stdio --dsos=libmesos-0.21.0.so
 
-echo " [run] perf report "
-cecho " [cmd] perf report" $GREEN
+cecho " [run] perf report " $GREEN
+cecho " [cmd] perf report" $BLUE
 perf report
 echo
