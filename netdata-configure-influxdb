@@ -1,0 +1,47 @@
+#!/bin/bash
+
+
+# https://docs.iredmail.org/integration.netdata.linux.html
+# System tuning
+# To get better performance, netdata requires few sysctl settings. Please add lines below in /etc/sysctl.conf:
+
+# vm.dirty_expire_centisecs=60000
+# vm.dirty_background_ratio=80
+# vm.dirty_ratio=90
+# Also increase max open files limit.
+
+# mkdir -p /etc/systemd/system/netdata.service.d
+# Create file /etc/systemd/system/netdata.service.d/limits.conf:
+
+# [Service]
+# LimitNOFILE=30000
+# Reload systemd daemon:
+
+# systemctl daemon-reload
+
+# netdata side
+
+
+# [backend]
+#         host tags = $TAG
+#         enabled = yes
+#         data source = average
+#         type = opentsdb
+#         destination = tcp:192.168.1.218:$4242
+#         prefix = $PREFIX
+#         hostname = $HOSTNAME
+#         update every = 10
+#         buffer on failures = 10
+#         timeout ms = 20000
+#         # send names instead of ids = yes
+#         # send charts matching = *
+
+
+# influx side
+
+# [[opentsdb]]
+#   enabled = true
+#   bind-address = ":$PORT"
+#   database = "opentsdb"
+
+# https://lloydsla.de/2017/09/04/influxdb-grafana-netdata/
