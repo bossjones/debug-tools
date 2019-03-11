@@ -1,0 +1,19 @@
+#!/bin/bash
+
+mkdir -p /etc/systemd/system/netdata.service.d/
+
+cat <<EOF >/etc/systemd/system/netdata.service.d/perf.conf
+[Service]
+Restart=on-failure
+RestartSec=20
+TimeoutStartSec=0
+
+LimitMEMLOCK=infinity
+# LimitNOFILE=524288
+LimitNOFILE=20288
+
+EOF
+
+systemctl daemon-reload
+systemctl netdata restart
+systemctl netdata enable
