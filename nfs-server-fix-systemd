@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -x
+
+mkdir -p /etc/systemd/system/nfs-server.service.d/
+
+cat <<EOF >/etc/systemd/system/nfs-server.service.d/perf.conf
+[Service]
+LimitMEMLOCK=infinity
+# LimitNOFILE=524288
+LimitNOFILE=30288
+EOF
+
+systemctl status nfs-server.service
+systemctl daemon-reload
+systemctl status nfs-server.service
+systemctl restart nfs-server.service
+systemctl enable nfs-server.service
