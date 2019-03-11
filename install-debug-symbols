@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# SOURCE: https://wiki.ubuntu.com/Debug%20Symbol%20Packages
+
+cat <<EOF >/etc/apt/sources.list.d/ddebs.list
+deb http://ddebs.ubuntu.com bionic main restricted
+deb http://ddebs.ubuntu.com bionic-updates main restricted
+deb http://ddebs.ubuntu.com bionic universe
+deb http://ddebs.ubuntu.com bionic-updates universe
+deb http://ddebs.ubuntu.com bionic multiverse
+deb http://ddebs.ubuntu.com bionic-updates multiverse
+deb http://ddebs.ubuntu.com bionic-backports main restricted universe multiverse
+EOF
+
+
+sudo apt install ubuntu-dbgsym-keyring -y
+
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F2EDC64DC5AEE1F6B9C621F0C8CAB6595FDFF622
+
+apt-get update
