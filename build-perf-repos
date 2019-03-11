@@ -6,6 +6,24 @@ NUMPROCS=$(nproc --all)
 
 apt-get install systemtap-sdt-dev ktap -y
 
+
+apt-get install -y bison cmake ethtool flex git iperf libstdc++6 python-netaddr python-pip gcc gcc-c++ make zlib-dev elfutils-libelf-dev gnutls-dev python-dev
+ap-get install -y clang clang-dev llvm llvm-dev
+ap-get install -y luajit luajit-dev
+pip install pyroute2
+
+apt-get -y install bison build-essential cmake flex git libedit-dev \
+libllvm6.0 llvm-6.0-dev libclang-6.0-dev python zlib1g-dev libelf-dev
+
+# how to install perf cmd
+apt install linux-tools-common -y
+apt-get install -y linux-headers-$(uname -r)
+apt install -y linux-cloud-tools-$(uname -r)
+
+apt-get install -y linux-tools-generic linux-cloud-tools-generic
+
+
+cd ~/dev
 ### Build BCC from source
 echo "Building BCC from source..."
 mkdir bcc/build; pushd bcc/build
@@ -42,7 +60,13 @@ popd
 
 ### Setting environment variables
 echo "Setting environment variables for PATH and MANPATH..."
-sudo bash -c 'cat >> /etc/profile << \EOF
-  PATH=$PATH:/usr/share/bcc/tools:/usr/share/perf-tools
-  MANPATH=$MANPATH:/usr/share/bcc/man/man8
+bash -c 'cat >> ~/.bashrc << \EOF
+  PATH=$PATH:/usr/share/bcc/tools
+  MANPATH=/usr/share/man:/usr/share/bcc/man/man8
+EOF'
+
+
+bash -c 'cat >> ~/.zshrc.local << \EOF
+  PATH=$PATH:/usr/share/bcc/tools
+  MANPATH=/usr/share/man:/usr/share/bcc/man/man8
 EOF'
