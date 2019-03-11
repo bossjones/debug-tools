@@ -1,0 +1,48 @@
+#!/bin/bash
+
+cd ~/dev
+
+NUMPROCS=$(nproc --all)
+
+apt-get install systemtap-sdt-dev ktap -y
+
+### Build BCC from source
+echo "Building BCC from source..."
+mkdir bcc/build; pushd bcc/build
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+make -j $NUMPROCS
+echo "Installing into /usr/share/bcc..."
+sudo make install
+popd
+
+### Building perf-map-agent
+echo "Building perf-map-agent..."
+pushd perf-map-agent
+cmake .
+make
+bin/create-links-in .
+popd
+
+### Building async-profiler
+echo "Building async-profiler..."
+pushd async-profiler
+export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))
+make
+popd
+
+
+### Build Node from source
+echo "Building Node from source..."
+pushd node
+./configure --with-dtrace --enable-d8
+make -j $NUMPROCS
+sudo make install
+popd
+
+
+### Setting environment variables
+echo "Setting environment variables for PATH and MANPATH..."
+sudo bash -c 'cat >> /etc/profile << \EOF
+  PATH=$PATH:/usr/share/bcc/tools:/usr/share/perf-tools
+  MANPATH=$MANPATH:/usr/share/bcc/man/man8
+EOF'
