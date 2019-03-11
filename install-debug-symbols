@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /usr/local/bin/color-echo-helper
+
 # SOURCE: https://wiki.ubuntu.com/Debug%20Symbol%20Packages
 
 cat <<EOF >/etc/apt/sources.list.d/ddebs.list
@@ -18,3 +20,10 @@ sudo apt install ubuntu-dbgsym-keyring -y
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F2EDC64DC5AEE1F6B9C621F0C8CAB6595FDFF622
 
 apt-get update
+
+
+#  sudo bash ./list-symbols-packages-v2.sh -p $(pidof yelp)
+
+echo
+cecho ' [example] list-symbols-packages-v2.sh -p $(pidof yelp) ' $GREEN
+echo
