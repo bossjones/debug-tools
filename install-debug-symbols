@@ -25,5 +25,5 @@ apt-get update
 #  sudo bash ./list-symbols-packages-v2.sh -p $(pidof yelp)
 
 echo
-cecho ' [example] list-symbols-packages-v2.sh -p $(pidof yelp) ' $GREEN
+cecho ' [example] list-symbols-packages-v2.sh -p $(pidof yelp) 2>/dev/null| xargs -d $"\n" sudo apt-get install ' $GREEN
 echo
