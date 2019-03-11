@@ -15,5 +15,5 @@ LimitNOFILE=20288
 EOF
 
 systemctl daemon-reload
-systemctl netdata restart
-systemctl netdata enable
+systemctl restart netdata
+systemctl enable netdata
