@@ -9,9 +9,9 @@ echo "Cloning GitHub repos to build from source..."
 git clone --depth=1 https://github.com/goldshtn/linux-tracing-workshop labs
 git clone https://github.com/iovisor/bcc
 git clone --depth=1 https://github.com/brendangregg/FlameGraph
-git clone --depth=1 https://github.com/nodejs/node
-git clone --depth=1 https://github.com/postgres/postgres
-git clone --depth=1 https://github.com/MariaDB/server mariadb
+# git clone --depth=1 https://github.com/nodejs/node
+# git clone --depth=1 https://github.com/postgres/postgres
+# git clone --depth=1 https://github.com/MariaDB/server mariadb
 git clone --depth=1 https://github.com/jrudolph/perf-map-agent
 git clone --depth=1 https://github.com/brendangregg/perf-tools
 git clone --depth=1 https://github.com/goldshtn/slodns
