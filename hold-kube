@@ -1,0 +1,14 @@
+#!/bin/bash
+
+
+source /usr/local/bin/color-echo-helper
+
+cecho " [run] sudo apt-mark hold docker-ce " $GREEN
+cecho " [run] sudo apt-mark hold kubeadm " $GREEN
+cecho " [run] sudo apt-mark hold kubectl " $GREEN
+cecho " [run] sudo apt-mark hold kubelet " $GREEN
+
+sudo apt-mark hold docker-ce
+sudo apt-mark hold kubeadm
+sudo apt-mark hold kubectl
+sudo apt-mark hold kubelet
