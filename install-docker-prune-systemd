@@ -1,0 +1,37 @@
+#!/bin/bash
+
+cat <<EOF >/etc/systemd/system/docker-prune.service
+[Unit]
+Description=Prune Docker
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/docker system prune -f -a --volumes
+
+[Install]
+WantedBy=multi-user.target
+
+EOF
+
+cat <<EOF >/etc/systemd/system/docker-prune.timer
+[Unit]
+Description=Prune Docker regularly
+Requires=docker-prune.service
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+Unit=docker-prune.service
+
+[Install]
+WantedBy=timers.target
+
+EOF
+
+systemctl status docker-prune.timer
+systemctl daemon-reload
+systemctl status docker-prune.timer
+systemctl start docker-prune.timer
+systemctl enable docker-prune.timer
