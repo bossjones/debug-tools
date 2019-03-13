@@ -1,0 +1,30 @@
+#!/bin/bash
+
+source /usr/local/bin/color-echo-helper
+
+cecho " [run] Run fluentd is pure docker for testing purposes " $GREEN
+echo
+echo
+cecho " [cmd] run bossjones/fluentd-elasticsearch:v4.0.0" $BLUE
+docker run --rm \
+-p 80:80 \
+-p 9292:9292 \
+-p 24224:24224 \
+-p 161:161 \
+-p 9880:9880 \
+-p 5160:5160 \
+-p 5170:5170 \
+-p 24231:24231 \
+-p 24220:24220 \
+-p 5140:5140 \
+-v /var/log:/var/log \
+-v /var/lib/docker/containers:/var/lib/docker/containers:ro \
+-v /etc/fluent/config.d:/etc/fluent/config.d \
+-v /run/containerd/containerd.sock:/var/run/docker.sock \
+-v /var/run:/var/run \
+-v /lib/x86_64-linux-gnu/libsystemd.so.0:/usr/lib64/libsystemd.so.0 \
+bossjones/fluentd-elasticsearch:v4.0.0
+
+echo
+
+
