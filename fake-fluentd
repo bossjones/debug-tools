@@ -2,6 +2,13 @@
 
 source /usr/local/bin/color-echo-helper
 
+# trap ctrl-c and call ctrl_c()
+trap ctrl_c INT
+
+function ctrl_c() {
+        echo "** Trapped CTRL-C"
+}
+
 cecho " [run] Run fluentd is pure docker for testing purposes " $GREEN
 echo
 echo
