@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source /usr/local/bin/color-echo-helper
+
+
+cecho " [run] Run flog docker container to generate fake logs " $GREEN
+cecho " [info] More info: https://github.com/mingrammer/flog " $GREEN
+echo
+echo
+cecho " [cmd] docker run -it --rm mingrammer/flog" $BLUE
+docker run -it --rm mingrammer/flog "$@"
+echo
+
+
