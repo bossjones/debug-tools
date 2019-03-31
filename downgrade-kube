@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# v1.13.4
+
+_IS_NODE_CHECK=$(hostname | grep "node" | wc -l)
+
+source /usr/local/bin/color-echo-helper
+
+
+if [[ "${_IS_NODE_CHECK}" = "0" ]]; then
+    # DOWNGRADE ( master )
+    cecho " [run] DOWNGRADE ( master ) " $GREEN
+    sudo apt-get install kubeadm=1.13.4-00 kubelet=1.13.4-00 kubectl=1.13.4-00 kubernetes-cni=0.6.0-00 -y
+else
+    # DOWNGRADE ( node )
+    cecho " [run] DOWNGRADE ( node ) " $GREEN
+    sudo apt-get install kubelet=1.13.4-00 kubectl=1.13.4-00 kubernetes-cni=0.6.0-00 -y
+fi
+
+sudo apt-mark hold kubeadm
+sudo apt-mark hold kubectl
+sudo apt-mark hold kubelet
+
