@@ -40,6 +40,21 @@ lsmod_array=( ip_vs_wrr ip_vs_rr ip_vs_sh ip_vs nf_conntrack_ipv4 bridge br_netf
 
 for i in "${lsmod_array[@]}"; do goss add command "lsmod | grep -- \"^${i}\" | wc -l"; done
 
+# these two need to be set to 0.0.0.0
+# SOURCE: these are all broken FYI
+# NOTE: BROKEN
+# NOTE: BROKEN
+# NOTE: BROKEN
+# NOTE: BROKEN
+# NOTE: BROKEN
+# NOTE: BROKEN
+goss add command 'kubectl get configmaps -n kube-system kubeadm-config -o jsonpath="{.controllerManager.extraArgs.address}" | wc -l'
+goss add command 'kubectl get configmaps -n kube-system kubeadm-config -o jsonpath="{.scheduler.extraArgs.address}" | wc -l'
+goss add command 'kubectl get configmaps -n kube-system kubeadm-config -o jsonpath="{.apiserver.extraArgs.authorization-mode}" | wc -l'
+
+# FIXME: Start here 4/1/2019
+kubectl get configmaps -n kube-system kubeadm-config -o jsonpath='{.data.ClusterConfiguration}'
+
 # root@k8s-head:/etc# ls -lta
 # total 1100
 # drwxr-xr-x   2 root root       4096 Apr  1 00:18 netplan
