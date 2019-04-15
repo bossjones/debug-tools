@@ -30,3 +30,10 @@ echo "-----------------------------------------------------"
 echo "systemctl daemon-reload"
 echo -e "systemctl restart kubelet\n\n"
 echo "-----------------------------------------------------"
+
+CHECK_CGROUP_DRIVER=$(cat /etc/default/kubelet | sed 's,KUBELET_EXTRA_ARGS=,,g'| grep 'cgroup-driver=systemd'| wc -l)
+
+if [[ "${CHECK_CGROUP_DRIVER}" = "0" ]]; then
+    echo "Add --cgroup-driver=systemd to KUBELET_EXTRA_ARGS in /etc/default/kubelet"
+    exit 1
+fi
