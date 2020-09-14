@@ -1,0 +1,5 @@
+export PYENV_VERSIONS_TO_INSTALL="3.7.8\n2.7.16\n"
+export PYENV_ROOT=~/.pyenv
+export PATH="${PYENV_ROOT}/bin:${PYENV_ROOT}/shims:$PATH"
+export RBENV_ROOT=~/.rbenv
+export RBENV_VERSION=2.6.6
