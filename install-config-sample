@@ -3,3 +3,4 @@ export PYENV_ROOT=~/.pyenv
 export PATH="${PYENV_ROOT}/bin:${PYENV_ROOT}/shims:$PATH"
 export RBENV_ROOT=~/.rbenv
 export RBENV_VERSION=2.6.6
+export NODE_VERSION_TO_INSTALL=10.3.0
