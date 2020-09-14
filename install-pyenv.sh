@@ -65,6 +65,7 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
 fi
 
 logmsg ">>> Install Pyenv ${VERSION}"
+echo ${OS}
 case ${OS} in
   Linux)
     sudo apt-get update && \
