@@ -85,18 +85,4 @@ case ${OS} in
   *) echo "${OS}-${ARCH} does'nt supported yet."; exit 1;;
 esac
 
-# cd /var/tmp
-
-# wget -N https://storage.googleapis.com/golang/go$VERSION.$OS-$ARCH.tar.gz
-
-# tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
-
-# rm go$VERSION.$OS-$ARCH.tar.gz
-
-# cat >>~/.bashrc <<EOF
-# export GOPATH=/usr/local
-# export GOROOT=/usr/local/go
-# export PATH=\$PATH:\$GOROOT/bin
-# EOF
-
 exit 0
