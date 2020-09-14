@@ -67,7 +67,7 @@ fi
 logmsg ">>> Install Pyenv ${VERSION}"
 echo ${OS}
 case ${OS} in
-  Linux)
+  *inux)
     sudo apt-get update && \
     sudo apt-get install -y --no-install-recommends git ca-certificates curl && \
     curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash && \
