@@ -47,7 +47,7 @@ if [[ -x $(which -p rbenv) ]]; then
   eval "$(rbenv init -)"
 fi
 
-echo 'gem: --no-rdoc --no-ri' >> /.gemrc
+echo 'gem: --no-rdoc --no-ri' >> ~/.gemrc
 
 rbenv install ${RBENV_VERSION}
 rbenv global ${RBENV_VERSION}
