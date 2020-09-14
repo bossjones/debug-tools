@@ -71,13 +71,14 @@ case ${OS} in
     sudo apt-get install -y --no-install-recommends git ca-certificates curl && \
     curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash && \
     git clone https://github.com/yyuu/pyenv-pip-rehash.git $(pyenv root)/plugins/pyenv-pip-rehash
-     echo -e "${PYENV_VERSIONS_TO_INSTALL}" > /python-versions.txt
+    
+    echo -e "${PYENV_VERSIONS_TO_INSTALL}" > ~/python-versions.txt
     pyenv update && \
-            xargs -P 4 -n 1 pyenv install < /python-versions.txt && \
+            xargs -P 4 -n 1 pyenv install < ~/python-versions.txt && \
             pyenv global $(pyenv versions --bare) && \
             find $PYENV_ROOT/versions -type d '(' -name '__pycache__' -o -name 'test' -o -name 'tests' ')' -exec rm -rfv '{}' + && \
             find $PYENV_ROOT/versions -type f '(' -name '*.py[co]' -o -name '*.exe' ')' -exec rm -fv '{}' + && \
-            cat /python-versions.txt > $PYENV_ROOT/version
+            cat ~/python-versions.txt | tee $PYENV_ROOT/version
     
     ;;
   Darwin) OS=darwin;;
