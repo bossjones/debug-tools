@@ -23,6 +23,8 @@ _DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 source ${_DIR}/install-config
 
+export PATH="${RBENV_ROOT}/shims:${RBENV_ROOT}/bin:$PATH"
+
 curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
 
 curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
