@@ -9,8 +9,8 @@ sudo apt-get -y install bison build-essential cmake flex git libedit-dev \
 libllvm6.0 llvm-6.0-dev libclang-6.0-dev python zlib1g-dev libelf-dev
 
 # how to install perf cmd
-apt install linux-tools-common -y
+sudo apt install linux-tools-common -y
 sudo apt-get install -y linux-headers-$(uname -r)
-apt install -y linux-cloud-tools-$(uname -r)
+sudo apt install -y linux-cloud-tools-$(uname -r)
 
 sudo apt-get install -y linux-tools-generic linux-cloud-tools-generic
