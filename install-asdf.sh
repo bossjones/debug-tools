@@ -52,6 +52,7 @@ asdf_add_or_ignore terraform https://github.com/Banno/asdf-hashicorp.git # 0.13.
 asdf_add_or_ignore vault https://github.com/Banno/asdf-hashicorp.git # 1.5.3
 asdf_add_or_ignore poetry https://github.com/crflynn/asdf-poetry.git # 1.0.10
 asdf_add_or_ignore yq https://github.com/sudermanjr/asdf-yq.git # 3.2.3 
+asdf_add_or_ignore ripgrep https://github.com/jgillis01/asdf-ripgrep.git
 
 # asdf install goss 0.3.13
 # asdf global goss 0.3.13
@@ -97,6 +98,9 @@ asdf global poetry 1.0.10
 
 asdf install yq 3.2.3
 asdf global yq 3.2.3
+
+asdf install ripgrep 12.1.1
+asdf global ripgrep 12.1.1
 
 logmsg " [fd] testing"
 fd --help
