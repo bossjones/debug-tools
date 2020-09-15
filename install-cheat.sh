@@ -81,7 +81,9 @@ fi
 cd /usr/local/bin
 
 
-sudo wget -c https://github.com/cheat/cheat/releases/download/${CHEAT_VERSION}/cheat-${SYSTEM}-${HARDWARE}.gz -O - | sudo tar -xvf -C /usr/local/bin
+curl -L "https://github.com/cheat/cheat/releases/download/${CHEAT_VERSION}/cheat-${SYSTEM}-${HARDWARE}.gz" > cheat-${SYSTEM}-${HARDWARE}.gz
+gzip -d cheat-${SYSTEM}-${HARDWARE}.gz
+mv cheat-${SYSTEM}-${HARDWARE} cheat
 # https://github.com/cheat/cheat/releases/download/4.1.0/cheat-linux-amd64.gz
 chmod +x /usr/local/bin/cheat
 
