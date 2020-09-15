@@ -15,3 +15,22 @@ sudo apt-get install -y linux-headers-$(uname -r)
 sudo apt install -y linux-cloud-tools-$(uname -r)
 
 sudo apt-get install -y linux-tools-generic linux-cloud-tools-generic
+
+SYSTEM=$(uname -s)
+if [ "${SYSTEM}" = "Linux" ]; then
+	sudo apt-get update -qq
+	sudo apt-get -y install bison \
+				autotools-dev \
+				libncurses5-dev \
+				libevent-dev \
+				pkg-config \
+				libutempter-dev \
+				build-essential
+fi
+
+if [ "${SYSTEM}" = "freebsd" ]; then
+	sudo pkg install -y \
+		automake \
+		libevent \
+		pkgconf
+fi
