@@ -79,8 +79,8 @@ fi
 cd /usr/local/bin
 
 
-wget -c https://github.com/bcicen/ctop/releases/download/${CHEAT_VERSION}/cheat-${SYSTEM}-${HARDWARE}.gz -O - | tar -xz -C /usr/local/bin
-
+wget -c https://github.com/cheat/cheat/releases/download/${CHEAT_VERSION}/cheat-${SYSTEM}-${HARDWARE}.gz -O - | tar -xz -C /usr/local/bin
+# https://github.com/cheat/cheat/releases/download/4.1.0/cheat-linux-amd64.gz
 chmod +x /usr/local/bin/cheat
 
 cd -
