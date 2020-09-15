@@ -1,11 +1,12 @@
 #!/bin/bash
 
-set -e
+set -exu
+set -o pipefail
 
 #-----------------------------------------------------------------------
 # Linux (Linux/x86_64, Darwin/x86_64, Linux/armv7l)
 #
-# install-neovim-config.sh - Install neovim-config
+# install-neovim-config.sh - Install neovim-config ( this one does it ALL )
 #
 # usage: install-neovim-config.sh NON_ROOT_USER (use a non root user on your file system)
 #
