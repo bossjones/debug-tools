@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # cheat-darwin-amd64.gz
 # 2.55 MB
 # cheat-linux-386.gz
