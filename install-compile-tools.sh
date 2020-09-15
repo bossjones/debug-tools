@@ -25,7 +25,8 @@ if [ "${SYSTEM}" = "Linux" ]; then
 				libevent-dev \
 				pkg-config \
 				libutempter-dev \
-				build-essential
+				build-essential \
+				automake
 fi
 
 if [ "${SYSTEM}" = "freebsd" ]; then
