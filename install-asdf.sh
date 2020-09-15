@@ -53,6 +53,7 @@ asdf_add_or_ignore vault https://github.com/Banno/asdf-hashicorp.git # 1.5.3
 asdf_add_or_ignore poetry https://github.com/crflynn/asdf-poetry.git # 1.0.10
 asdf_add_or_ignore yq https://github.com/sudermanjr/asdf-yq.git # 3.2.3 
 asdf_add_or_ignore ripgrep https://github.com/jgillis01/asdf-ripgrep.git
+asdf_add_or_ignore kustomize https://github.com/Banno/asdf-kustomize.git # 3.8.2
 
 # asdf install goss 0.3.13
 # asdf global goss 0.3.13
@@ -101,6 +102,9 @@ asdf global yq 3.2.3
 
 asdf install ripgrep 12.1.1
 asdf global ripgrep 12.1.1
+
+asdf install kustomize 3.8.2
+asdf global kustomize 3.8.2
 
 logmsg " [fd] testing"
 fd --help
@@ -153,4 +157,8 @@ logmsg "\n"
 
 logmsg " [yq] testing"
 yq --version
+logmsg "\n"
+
+logmsg " [kustomize] testing"
+kustomize version
 logmsg "\n"
