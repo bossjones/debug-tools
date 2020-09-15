@@ -53,7 +53,7 @@ if [ "${SYSTEM}" = "Linux" ]; then
       /usr/local/bin/install-fonts.sh
       pip3 install pylint
       pip3 install flake8
-      pip3 install autoflake8
+      pip3 install autoflake
       /usr/local/bin/setup-neovim.sh
     fi
   else
