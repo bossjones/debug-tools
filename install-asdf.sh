@@ -14,7 +14,7 @@ set -e
 #-----------------------------------------------------------------------
 
 logmsg() {
-  echo ">>> $1"
+  echo -e ">>> $1"
 }
 
 asdf_add_or_ignore() {
@@ -98,44 +98,55 @@ asdf global poetry 1.0.10
 asdf install yq 3.2.3
 asdf global yq 3.2.3
 
-echo " [fd] testing"
+logmsg " [fd] testing"
 fd --help
 
-echo " [tmux] testing"
+logmsg " [tmux] testing"
 tmux -V
 
-echo " [helm] testing"
+logmsg " [helm] testing"
 helm --help
 
-echo " [helm] jsonnet"
+logmsg " [helm] jsonnet"
 jsonnet --help
+logmsg "\n"
 
-echo " [k9s] testing"
+logmsg " [k9s] testing"
 k9s --help
+logmsg "\n"
 
-echo " [kubectl] testing"
+logmsg " [kubectl] testing"
 kubectl version
+logmsg "\n"
 
-echo " [kubectx] testing"
+logmsg " [kubectx] testing"
 kubectx --help
+logmsg "\n"
 
-echo " [kubeval] testing"
+logmsg " [kubeval] testing"
 kubeval --version
+logmsg "\n"
 
-echo " [neovim] testing"
+logmsg " [neovim] testing"
 nvim --version
+logmsg "\n"
 
-echo " [packer] testing"
+logmsg " [packer] testing"
 packer --version
+logmsg "\n"
 
-echo " [terraform] testing"
+logmsg " [terraform] testing"
 terraform --version
+logmsg "\n"
 
-echo " [vault] testing"
+logmsg " [vault] testing"
 vault --version
+logmsg "\n"
 
-echo " [poetry] testing"
+logmsg " [poetry] testing"
 poetry --version
+logmsg "\n"
 
-echo " [yq] testing"
+logmsg " [yq] testing"
 yq --version
+logmsg "\n"
