@@ -17,6 +17,11 @@ logmsg() {
   echo ">>> $1"
 }
 
+asdf_add_or_ignore() {
+  echo ">>> Adding asdf plugin: $1"
+  asdf plugin-add $1 $2 || echo "plugin already loaded"
+}
+
 _DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 [[ -f ${_DIR}/install-config ]] && echo "This file exists! - ${_DIR}/install-config"
@@ -29,21 +34,21 @@ echo "[asdf] enable"
 
 # asdf plugin-add 1password https://github.com/samtgarson/asdf-1password.git # 1.6.0 
 # asdf plugin add goss https://github.com/raimon49/asdf-goss.git # 0.3.13 
-asdf plugin-add hadolint https://github.com/looztra/asdf-hadolint # 1.18.0
-asdf plugin add fd # 8.1.1 
-asdf plugin-add tmux https://github.com/aphecetche/asdf-tmux.git # 2.9a
-asdf plugin-add helm https://github.com/Antiarchitect/asdf-helm.git # 3.3.1 
-asdf plugin-add jsonnet https://github.com/Banno/asdf-jsonnet.git # 0.16.0
-asdf plugin-add k9s https://github.com/looztra/asdf-k9s # 0.21.7 
-asdf plugin-add kubectl https://github.com/Banno/asdf-kubectl.git # 1.18.6
-asdf plugin add kubectx # 0.9.1
-asdf plugin-add kubeval https://github.com/stefansedich/asdf-kubeval # 0.15.0 
-asdf plugin-add neovim # 0.4.4 
-asdf plugin-add packer https://github.com/Banno/asdf-hashicorp.git # 1.6.2
-asdf plugin-add terraform https://github.com/Banno/asdf-hashicorp.git # 0.13.2
-asdf plugin-add vault https://github.com/Banno/asdf-hashicorp.git # 1.5.3
-asdf plugin-add poetry https://github.com/crflynn/asdf-poetry.git # 1.0.10
-asdf plugin-add yq https://github.com/sudermanjr/asdf-yq.git # 3.2.3 
+asdf_add_or_ignore hadolint https://github.com/looztra/asdf-hadolint # 1.18.0
+asdf_add_or_ignore fd # 8.1.1 
+asdf_add_or_ignore tmux https://github.com/aphecetche/asdf-tmux.git # 2.9a
+asdf_add_or_ignore helm https://github.com/Antiarchitect/asdf-helm.git # 3.3.1 
+asdf_add_or_ignore jsonnet https://github.com/Banno/asdf-jsonnet.git # 0.16.0
+asdf_add_or_ignore k9s https://github.com/looztra/asdf-k9s # 0.21.7 
+asdf_add_or_ignore kubectl https://github.com/Banno/asdf-kubectl.git # 1.18.6
+asdf_add_or_ignore kubectx # 0.9.1
+asdf_add_or_ignore kubeval https://github.com/stefansedich/asdf-kubeval # 0.15.0 
+asdf_add_or_ignore neovim # 0.4.4 
+asdf_add_or_ignore packer https://github.com/Banno/asdf-hashicorp.git # 1.6.2
+asdf_add_or_ignore terraform https://github.com/Banno/asdf-hashicorp.git # 0.13.2
+asdf_add_or_ignore vault https://github.com/Banno/asdf-hashicorp.git # 1.5.3
+asdf_add_or_ignore poetry https://github.com/crflynn/asdf-poetry.git # 1.0.10
+asdf_add_or_ignore yq https://github.com/sudermanjr/asdf-yq.git # 3.2.3 
 
 # asdf install goss 0.3.13
 # asdf global goss 0.3.13
