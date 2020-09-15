@@ -69,7 +69,7 @@ fi
 sudo chmod +x /usr/local/bin/cheat
 sudo chown ${NON_ROOT_USER}:${NON_ROOT_USER} /usr/local/bin/cheat
 
-[ ! -f ~/.config/cheat ] && mkdir -p ~/.config/cheat; cheat --init > ~/.config/cheat/conf.yml
+[ ! -f "${HOME}/.config/cheat/conf.yml" ] && mkdir -p ~/.config/cheat
 
 [[ ! -d "${HOME}/.config/cheat/cheatsheets/community" ]] && mkdir -p ~/.config/cheat/cheatsheets; git clone https://github.com/cheat/cheatsheets ~/.config/cheat/cheatsheets/community || pushd ~/.config/cheat/cheatsheets/community;git pull;popd
 
