@@ -2,6 +2,8 @@
 
 set -e
 
+_user=$1
+
 # cheat-darwin-amd64.gz
 # 2.55 MB
 # cheat-linux-386.gz
@@ -27,6 +29,12 @@ set -e
 
 # Install cheat
 # https://github.com/cheat/cheat/releases
+
+if [[ "${_user}x" = "x" ]]; then
+  NON_ROOT_USER=nobody
+else
+  NON_ROOT_USER=${_user}
+fi
 
 CHEAT_VERSION=4.1.0
 
@@ -85,7 +93,7 @@ if [ ! -f /usr/local/bin/cheat ]; then
   gzip -d cheat-${SYSTEM}-${HARDWARE}.gz
   mv cheat-${SYSTEM}-${HARDWARE} cheat
   sudo chmod +x /usr/local/bin/cheat
-  sudo chown $(whoami):$(whoami) /usr/local/bin/cheat
+  sudo chown ${NON_ROOT_USER}:${NON_ROOT_USER} /usr/local/bin/cheat
 fi
 
 [ ! -f ~/.config/cheat ] && mkdir -p ~/.config/cheat; cheat --init > ~/.config/cheat/conf.yml
