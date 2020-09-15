@@ -5,9 +5,9 @@ set -e
 #-----------------------------------------------------------------------
 # Linux (Linux/x86_64, Darwin/x86_64, Linux/armv7l)
 #
-# install-rbenv.sh - Install rbenv
+# install-asdf.sh - Install asdf
 #
-# usage: install-rbenv.sh
+# usage: install-asdf.sh
 #
 # Copyright (c) 2020 Malcolm Jones
 # All Rights Reserved.
