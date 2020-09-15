@@ -2,28 +2,18 @@
 
 set -e
 
+#-----------------------------------------------------------------------
+# Linux (Linux/x86_64, Darwin/x86_64, Linux/armv7l)
+#
+# install-cheat.sh - Install cheat
+#
+# usage: install-cheat.sh NON_ROOT_USER (use a non root user on your file system)
+#
+# Copyright (c) 2020 Malcolm Jones
+# All Rights Reserved.
+#-----------------------------------------------------------------------
+
 _user=$1
-
-# cheat-darwin-amd64.gz
-# 2.55 MB
-# cheat-linux-386.gz
-# 2.32 MB
-# cheat-linux-amd64.gz
-# 2.5 MB
-# cheat-linux-arm5.gz
-# 2.4 MB
-# cheat-linux-arm6.gz
-# 2.39 MB
-# cheat-linux-arm7.gz
-# 2.39 MB
-# cheat-windows-amd64.exe.zip
-# 2.56 MB
-# Source code
-# (zip)
-# Source code
-# (tar.gz)
-
-# https://github.com/cheat/cheat/releases/download/4.1.0/cheat-linux-amd64.gz
 
 # SOURCE: https://github.com/tkyonezu/Linux-tools/blob/98a373f3756fe9e27d27a8c3cf7d39fd447ea5c1/install-ctop.sh
 
@@ -68,24 +58,6 @@ else
   exit 1
 fi
 
-# cheat-darwin-amd64.gz
-# 2.55 MB
-# cheat-linux-386.gz
-# 2.32 MB
-# cheat-linux-amd64.gz
-# 2.5 MB
-# cheat-linux-arm5.gz
-# 2.4 MB
-# cheat-linux-arm6.gz
-# 2.39 MB
-# cheat-linux-arm7.gz
-# 2.39 MB
-# cheat-windows-amd64.exe.zip
-# 2.56 MB
-# Source code
-# (zip)
-# Source code
-# (tar.gz)
 cd /usr/local/bin
 
 if [ ! -f /usr/local/bin/cheat ]; then
