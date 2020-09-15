@@ -79,7 +79,7 @@ fi
 cd /usr/local/bin
 
 
-wget -c https://github.com/bcicen/ctop/releases/download/${CHEAT_VERSION}/cheat-${SYSTEM}-${HARDWARE} -O - | tar -xz -C /usr/local/bin
+wget -c https://github.com/bcicen/ctop/releases/download/${CHEAT_VERSION}/cheat-${SYSTEM}-${HARDWARE}.gz -O - | tar -xz -C /usr/local/bin
 
 chmod +x /usr/local/bin/cheat
 
