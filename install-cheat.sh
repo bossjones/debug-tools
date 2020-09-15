@@ -73,7 +73,7 @@ sudo chown ${NON_ROOT_USER}:${NON_ROOT_USER} /usr/local/bin/cheat
 
 [[ ! -d "${HOME}/.config/cheat/cheatsheets/community" ]] && mkdir -p ~/.config/cheat/cheatsheets; git clone https://github.com/cheat/cheatsheets ~/.config/cheat/cheatsheets/community || pushd ~/.config/cheat/cheatsheets/community;git pull;popd
 
-cat <<EOF >~/.config/cheat/conf.yml
+cat <<'EOF' > ~/.config/cheat/conf.yml
 ---
 # The editor to use with 'cheat -e <sheet>'. Defaults to $EDITOR or $VISUAL.
 editor: vim
