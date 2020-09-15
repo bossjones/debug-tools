@@ -84,7 +84,8 @@ if [ ! -f /usr/local/bin/cheat ]; then
   curl -L "https://github.com/cheat/cheat/releases/download/${CHEAT_VERSION}/cheat-${SYSTEM}-${HARDWARE}.gz" > cheat-${SYSTEM}-${HARDWARE}.gz
   gzip -d cheat-${SYSTEM}-${HARDWARE}.gz
   mv cheat-${SYSTEM}-${HARDWARE} cheat
-  chmod +x /usr/local/bin/cheat
+  sudo chmod +x /usr/local/bin/cheat
+  sudo chown $(whoami):$(whoami) /usr/local/bin/cheat
 fi
 
 [ ! -f ~/.config/cheat ] && mkdir -p ~/.config/cheat; cheat --init > ~/.config/cheat/conf.yml
