@@ -32,6 +32,9 @@ git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0 || true
 echo "[asdf] enable"
 . $HOME/.asdf/asdf.sh
 
+echo " [asdf] compile dependencies"
+/usr/local/bin/install-compile-tools.sh
+
 # asdf plugin-add 1password https://github.com/samtgarson/asdf-1password.git # 1.6.0 
 # asdf plugin add goss https://github.com/raimon49/asdf-goss.git # 0.3.13 
 asdf_add_or_ignore hadolint https://github.com/looztra/asdf-hadolint # 1.18.0
