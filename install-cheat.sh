@@ -13,6 +13,12 @@ set -e
 # All Rights Reserved.
 #-----------------------------------------------------------------------
 
+
+logmsg() {
+  echo ">>> $1"
+}
+
+
 _user=$1
 
 # SOURCE: https://github.com/tkyonezu/Linux-tools/blob/98a373f3756fe9e27d27a8c3cf7d39fd447ea5c1/install-ctop.sh
@@ -149,5 +155,8 @@ EOF
 
 
 cd -
+
+logmsg ">>> testing cmd: cheat cp"
+cheat cp
 
 exit 0
