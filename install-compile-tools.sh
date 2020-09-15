@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 sudo apt-get install systemtap-sdt-dev ktap -y
 
 sudo apt-get install -y bison cmake ethtool flex git iperf libstdc++6 python-netaddr python-pip gcc gcc-c++ make zlib-dev elfutils-libelf-dev gnutls-dev python-dev
