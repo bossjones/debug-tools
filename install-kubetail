@@ -7,3 +7,5 @@ sudo chmod +x /usr/local/bin/kubetail
 curl -L 'https://raw.githubusercontent.com/johanhaleby/kubetail/master/completion/kubetail.bash' | sudo tee /etc/bash_completion.d/kubetail.bash
 
 sudo chmod +x /etc/bash_completion.d/kubetail.bash
+
+curl -L 'https://raw.githubusercontent.com/johanhaleby/kubetail/master/completion/kubetail.zsh' | sudo tee /usr/local/share/zsh/site-functions/_kubetail
