@@ -81,5 +81,6 @@ chmod +x /usr/local/bin/jid
 
 sudo chmod +x /usr/local/bin/jid
 sudo chown ${NON_ROOT_USER}:${NON_ROOT_USER} /usr/local/bin/jid
+sudo cp -av /usr/local/bin/jid /usr/local/bin/jq_fzf
 
 exit 0
