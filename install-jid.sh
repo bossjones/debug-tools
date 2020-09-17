@@ -79,7 +79,7 @@ curl -L "${URL}" > /tmp/jid_${SYSTEM}_${HARDWARE}.zip
 unzip /tmp/jid_${SYSTEM}_${HARDWARE}.zip -d /usr/local/bin
 chmod +x /usr/local/bin/jid
 
-sudo chmod +x /usr/local/bin/kubebox
-sudo chown ${NON_ROOT_USER}:${NON_ROOT_USER} /usr/local/bin/kubebox
+sudo chmod +x /usr/local/bin/jid
+sudo chown ${NON_ROOT_USER}:${NON_ROOT_USER} /usr/local/bin/jid
 
 exit 0
