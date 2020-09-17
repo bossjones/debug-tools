@@ -34,14 +34,14 @@ else
   exit 1
 fi
 
-echo " [install-jid] generated url: https://github.com/simeji/jid/releases/download/v${JID_VERSION}/jid_${JID_VERSION}_${SYSTEM}-${HARDWARE}.zip"
+echo " [install-jid] generated url: https://github.com/simeji/jid/releases/download/v${JID_VERSION}/jid_${SYSTEM}-${HARDWARE}.zip"
 echo " [install-jid] hardcoded url: https://github.com/simeji/jid/releases/download/v0.7.6/jid_linux_amd64.zip"
 
-curl -L "https://github.com/simeji/jid/releases/download/v${JID_VERSION}/jid_${JID_VERSION}_${SYSTEM}-${HARDWARE}.zip" > /tmp/jid_${JID_VERSION}_${SYSTEM}-${HARDWARE}.zip
+curl -L "https://github.com/simeji/jid/releases/download/v${JID_VERSION}/jid_${SYSTEM}-${HARDWARE}.zip" > /tmp/jid_${SYSTEM}-${HARDWARE}.zip
 
 # https://github.com/simeji/jid/releases/download/v0.7.6/jid_linux_amd64.zip
 
-unzip /tmp/jid_${JID_VERSION}_${SYSTEM}-${HARDWARE}.zip -d /usr/local/bin
+unzip /tmp/jid_${SYSTEM}-${HARDWARE}.zip -d /usr/local/bin
 chmod +x /usr/local/bin/jid
 
 exit 0
