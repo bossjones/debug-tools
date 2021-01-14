@@ -12,4 +12,15 @@ if [ "${SYSTEM}" = "Linux" ]; then
 	# clean-up a bit
 	cd ..
 	rm -rf fonts
+elif [ "${SYSTEM}" = "Darwin" ]; then
+	mkdir -p ~/dev/powerline || true
+	cd ~/dev
+	# clone
+	git clone https://github.com/powerline/fonts.git --depth=1 || true
+	# install
+	cd fonts
+	bash -x ./install.sh
+	# clean-up a bit
+	cd ..
+	rm -rf fonts
 fi

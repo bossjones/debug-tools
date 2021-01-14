@@ -14,17 +14,25 @@ set -e
 # All Rights Reserved.
 #-----------------------------------------------------------------------
 
+# HOTFIX: https://dev.to/ajkerrigan/bring-your-vim-tmux-navigation-reflexes-to-vs-code-3abi
+# HOTFIX: https://dev.to/ajkerrigan/bring-your-vim-tmux-navigation-reflexes-to-vs-code-3abi
+# HOTFIX: https://dev.to/ajkerrigan/bring-your-vim-tmux-navigation-reflexes-to-vs-code-3abi
+# HOTFIX: https://dev.to/ajkerrigan/bring-your-vim-tmux-navigation-reflexes-to-vs-code-3abi
+# HOTFIX: https://dev.to/ajkerrigan/bring-your-vim-tmux-navigation-reflexes-to-vs-code-3abi
+# HOTFIX: https://dev.to/ajkerrigan/bring-your-vim-tmux-navigation-reflexes-to-vs-code-3abi
+# HOTFIX: https://dev.to/ajkerrigan/bring-your-vim-tmux-navigation-reflexes-to-vs-code-3abi
+
 logmsg() {
     echo ">>> $1"
 }
 
 _DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-[[ -f ${_DIR}/install-config ]] && echo "This file exists! - ${_DIR}/install-config"
+# [[ -f ${_DIR}/install-config ]] && echo "This file exists! - ${_DIR}/install-config" || true
 
-source ${_DIR}/install-config
+# source ${_DIR}/install-config
 
-
+mkdir -p ~/.bin/ || true
 ### Setting environment variables
 echo "Writing code-shell to ~/.bin/code-shell ..."
 bash -c 'cat >> ~/.bin/code-shell << \EOF
@@ -32,5 +40,7 @@ bash -c 'cat >> ~/.bin/code-shell << \EOF
     SESSION="vscode`pwd | md5`"
     tmux attach-session -d -t $SESSION || tmux new-session -s $SESSION
 EOF'
+
+chmod +x ~/.bin/code-shell
 
 echo "Don't forget to update vscode settings.json to use: \"terminal.integrated.shell.osx\": \"/Users/malcolm/.bin/code-shell\""

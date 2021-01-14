@@ -34,15 +34,3 @@ cd ~/dev/bossjones/oh-my-tmux/
 git remote add upstream git@github.com:gpakosz/.tmux.git
 git upstream https://github.com/gpakosz/.tmux.git
 cd -
-
-curl -L 'https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux' > ~/.bin/fzf-tmux
-chmod +x ~/.bin/fzf-tmux
-
-echo "Setting ~/.bin/tmux_colors.sh..."
-bash -c 'cat >> ~/.bin/tmux_colors.sh << \EOF
-    #! /bin/bash
-
-    for i in {0..255} ; do
-        printf "\x1b[38;5;${i}mcolour${i}\n"
-    done
-EOF'
