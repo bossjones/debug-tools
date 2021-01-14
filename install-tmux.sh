@@ -46,3 +46,8 @@ bash -c 'cat >> ~/.bin/tmux_colors.sh << \EOF
         printf "\x1b[38;5;${i}mcolour${i}\n"
     done
 EOF'
+
+
+git clone git@github.com:kevinhwang91/fzf-tmux-script.git ~/dev/fzf-tmux-script || cd ~/dev/fzf-tmux-script && git pull --rebase || true
+cp -av ~/dev/fzf-tmux-script/panes/fzf-panes.tmux ~/.bin/fzf-panes.tmux
+cp -av ~/dev/fzf-tmux-script/popup/fzfp ~/.bin/fzfp
