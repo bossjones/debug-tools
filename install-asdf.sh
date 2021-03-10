@@ -38,8 +38,8 @@ asdf global helm 3.3.1
 asdf install jsonnet 0.16.0
 asdf global jsonnet 0.16.0
 
-asdf install k9s 0.21.7
-asdf global k9s 0.21.7
+asdf install k9s 0.24.2
+asdf global k9s 0.24.2
 
 asdf install kubectl 1.18.6
 asdf global kubectl 1.18.6
