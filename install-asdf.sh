@@ -22,6 +22,16 @@ asdf plugin-add terraform https://github.com/Banno/asdf-hashicorp.git # 0.13.2
 asdf plugin-add vault https://github.com/Banno/asdf-hashicorp.git # 1.5.3
 asdf plugin-add poetry https://github.com/crflynn/asdf-poetry.git # 1.0.10
 asdf plugin-add yq https://github.com/sudermanjr/asdf-yq.git # 3.2.3
+asdf plugin add ag https://github.com/koketani/asdf-ag.git
+asdf plugin-add aria2 https://github.com/asdf-community/asdf-aria2.git
+asdf plugin-add argo https://github.com/sudermanjr/asdf-argo.git
+asdf plugin-add dive https://github.com/looztra/asdf-dive
+asdf plugin-add github-cli https://github.com/bartlomiejdanek/asdf-github-cli.git
+asdf plugin add kompose
+asdf plugin add mkcert
+asdf plugin-add shellcheck
+asdf plugin-add shfmt
+asdf plugin-add velero https://github.com/looztra/asdf-velero
 
 # asdf install goss 0.3.13
 # asdf global goss 0.3.13
@@ -68,6 +78,34 @@ asdf global poetry 1.1.8
 asdf install yq v4.12.2
 asdf global yq v4.12.2
 
+# Install specific version
+asdf install ag latest
+asdf global ag latest
+
+asdf install aria2 1.36.0
+asdf global aria2 1.36.0
+
+asdf install dive 0.10.0
+asdf global dive 0.10.0
+
+asdf install kompose 1.24.0
+asdf global kompose 1.24.0
+
+asdf install github-cli 2.0.0
+asdf global github-cli 2.0.0
+
+asdf install mkcert latest
+asdf global mkcert latest
+
+asdf install shellcheck latest
+asdf global shellcheck latest
+
+asdf install shfmt 3.3.1
+asdf global shfmt 3.3.1
+
+asdf install velero v1.6.3
+asdf global velero v1.6.3
+
 echo " [fd] testing"
 fd --help
 
@@ -109,3 +147,6 @@ poetry --version
 
 echo " [yq] testing"
 yq --version
+
+echo " [ag] testing"
+ag --help
