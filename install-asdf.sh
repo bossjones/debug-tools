@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+OS=$(uname -s)
+ARCH=$(uname -m)
+_whoami=$(whoami)
+
+if [ "${OS}" = "Linux" ]; then
+echo "Linux detected"
+    sudo apt-get install libpcre2-dev -y
+    sudo apt-get install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+fi
+
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0 || true
 
 echo "[asdf] enable"
