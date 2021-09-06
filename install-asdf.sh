@@ -5,7 +5,8 @@ ARCH=$(uname -m)
 _whoami=$(whoami)
 
 if [ "${OS}" = "Linux" ]; then
-echo "Linux detected"
+    # needed for ag
+    echo "Linux detected"
     sudo apt-get install libpcre2-dev -y
     sudo apt-get install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
 fi
