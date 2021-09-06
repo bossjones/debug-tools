@@ -1,7 +1,17 @@
 #!/usr/bin/env bash
 
+OS=$(uname -s)
+ARCH=$(uname -m)
+_whoami=$(whoami)
+
+if [ "${OS}" = "Linux" ]; then
+  echo "Linux detected"
+  echo "[running] sudo chown -R ${_whoami}:${_whoami} /usr/local/src/debug-tools"
+  sudo chown -R ${_whoami}:${_whoami} /usr/local/src/debug-tools
+fi
+
 pushd /usr/local/src/debug-tools
 git pull && \
-make copy;
+sudo make copy;
 popd
 exit 0
