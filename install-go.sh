@@ -43,7 +43,7 @@ wget -N https://storage.googleapis.com/golang/go$VERSION.$OS-$ARCH.tar.gz
 
 set -x
 
-if [[ "${OS}" == "Linux" ]]; then
+if [ "${OS}" = "Linux" ]; then
   export _whoami=$(whoami)
   sudo mkdir -p /usr/local/go || true
   sudo chown -Rv ${_whoami}:${_whoami} /usr/local/go

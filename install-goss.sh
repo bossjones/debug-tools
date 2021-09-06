@@ -5,6 +5,11 @@ set -e
 
 LATEST="v0.3.16"
 DGOSS_VER=$GOSS_VER
+OS=$(uname -s)
+ARCH=$(uname -m)
+_whoami=$(whoami)
+
+
 
 if [ -z "$GOSS_VER" ]; then
     GOSS_VER=${GOSS_VER:-$LATEST}
@@ -13,7 +18,14 @@ fi
 GOSS_DST=${GOSS_DST:-/usr/local/bin}
 INSTALL_LOC="${GOSS_DST%/}/goss"
 DGOSS_INSTALL_LOC="${GOSS_DST%/}/dgoss"
-touch "$INSTALL_LOC" || { echo "ERROR: Cannot write to $GOSS_DST set GOSS_DST elsewhere or use sudo"; exit 1; }
+
+if [ "${OS}" = "Linux" ]; then
+  echo "Linux detected"
+  sudo touch "$INSTALL_LOC" || { echo "ERROR: Cannot write to $GOSS_DST set GOSS_DST elsewhere or use sudo"; exit 1; }
+  sudo chown -Rv ${_whoami}:${_whoami} "$INSTALL_LOC"
+else
+  touch "$INSTALL_LOC" || { echo "ERROR: Cannot write to $GOSS_DST set GOSS_DST elsewhere or use sudo"; exit 1; }
+fi
 
 arch=""
 if [ "$(uname -m)" = "x86_64" ]; then
@@ -28,11 +40,7 @@ url="https://github.com/aelsabbahy/goss/releases/download/$GOSS_VER/goss-linux-$
 
 echo "Downloading $url"
 
-OS=$(uname -s)
-ARCH=$(uname -m)
-_whoami=$(whoami)
 
-logmsg ">>> Install Go ${VERSION}"
 
 case ${OS} in
   Linux)  OS=linux;;
@@ -46,7 +54,7 @@ case ${ARCH} in
   *) echo "${OS}-${ARCH} does'nt supported yet."; exit 1;;
 esac
 
-if [[ "${OS}" == "Linux" ]]; then
+if [ "${OS}" = "Linux" ]; then
   echo "Linux detected"
   sudo curl -L "$url" -o "$INSTALL_LOC"
   sudo chown -Rv ${_whoami}:${_whoami} "$INSTALL_LOC"
