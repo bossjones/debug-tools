@@ -27,6 +27,33 @@ fi
 url="https://github.com/aelsabbahy/goss/releases/download/$GOSS_VER/goss-linux-$arch"
 
 echo "Downloading $url"
+
+OS=$(uname -s)
+ARCH=$(uname -m)
+_whoami=$(whoami)
+
+logmsg ">>> Install Go ${VERSION}"
+
+case ${OS} in
+  Linux)  OS=linux;;
+  Darwin) OS=darwin;;
+  *) echo "${OS}-${ARCH} does'nt supported yet."; exit 1;;
+esac
+
+case ${ARCH} in
+  x86_64) ARCH=amd64;;
+  armv7l) ARCH=armv6l;;
+  *) echo "${OS}-${ARCH} does'nt supported yet."; exit 1;;
+esac
+
+if [[ "${OS}" == "Linux" ]]; then
+  echo "Linux detected"
+  sudo curl -L "$url" -o "$INSTALL_LOC"
+  sudo chown -Rv ${_whoami}:${_whoami} "$INSTALL_LOC"
+else
+  curl -L "$url" -o "$INSTALL_LOC"
+fi
+
 curl -L "$url" -o "$INSTALL_LOC"
 chmod +rx "$INSTALL_LOC"
 echo "Goss $GOSS_VER has been installed to $INSTALL_LOC"
