@@ -25,7 +25,8 @@ _DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # source ${_DIR}/install-config
 
 
-git clone git@github.com:bossjones/.vim.git ~/dev/bossjones/oh-my-vim || true
+git clone https://github.com/bossjones/.vim.git ~/dev/bossjones/oh-my-vim || true
+# git clone git@github.com:bossjones/.vim.git ~/dev/bossjones/oh-my-vim || true
 ln -v -s -f ~/dev/bossjones/oh-my-vim/.vim.conf ~/.vim.conf || true
 cp -av ~/dev/bossjones/oh-my-vim/.vim.conf.local ~/.vim.conf.local || true
 
