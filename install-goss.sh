@@ -26,7 +26,7 @@ if [ "${OS}" = "Linux" ]; then
   sudo touch "$INSTALL_LOC" || { echo "ERROR: Cannot write to $GOSS_DST set GOSS_DST elsewhere or use sudo"; exit 1; }
   sudo chown -Rv ${_whoami}:${_whoami} "$INSTALL_LOC"
 else
-  touch "$INSTALL_LOC" || { echo "ERROR: Cannot write to $GOSS_DST set GOSS_DST elsewhere or use sudo"; exit 1; }
+  sudo touch "$INSTALL_LOC" || { echo "ERROR: Cannot write to $GOSS_DST set GOSS_DST elsewhere or use sudo"; exit 1; }
 fi
 
 arch=""
