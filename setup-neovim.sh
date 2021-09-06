@@ -182,7 +182,7 @@ if [[ -d "$NVIM_CONFIG_DIR" ]]; then
     mv -fv "$NVIM_CONFIG_DIR" $NVIM_CONFIG_DIR.backup
 fi
 
-git clone https://github.com/jdhao/nvim-config.git "$NVIM_CONFIG_DIR" || true
+git clone https://github.com/bossjones/nvim-config.git "$NVIM_CONFIG_DIR" || true
 
 echo "Installing vim-plug"
 curl -fLo "$NVIM_CONFIG_DIR/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
