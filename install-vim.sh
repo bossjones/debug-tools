@@ -27,8 +27,8 @@ _DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 git clone https://github.com/bossjones/.vim.git ~/dev/bossjones/oh-my-vim || true
 # git clone git@github.com:bossjones/.vim.git ~/dev/bossjones/oh-my-vim || true
-ln -v -s -f ~/dev/bossjones/oh-my-vim/.vim.conf ~/.vim.conf || true
-cp -av ~/dev/bossjones/oh-my-vim/.vim.conf.local ~/.vim.conf.local || true
+ln -v -s -f ~/dev/bossjones/oh-my-vim/.vimrc ~/.vimrc || true
+cp -av ~/dev/bossjones/oh-my-vim/.vimrc.local ~/.vimrc.local || true
 
 
 cd ~/dev/bossjones/oh-my-vim/
