@@ -21,6 +21,7 @@ logmsg() {
 VERSION=1.15.2
 OS=$(uname -s)
 ARCH=$(uname -m)
+_whoami=$(whoami)
 
 logmsg ">>> Install Go ${VERSION}"
 
@@ -46,6 +47,7 @@ if [[ "${OS}" == "Linux" ]]; then
   export _whoami=$(whoami)
   sudo mkdir -p /usr/local/go || true
   sudo chown -Rv ${_whoami}:${_whoami} /usr/local/go
+  echo "[running] sudo tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz"
   sudo tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
   sudo chown -Rv ${_whoami}:${_whoami} /usr/local/go
 else
