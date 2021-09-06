@@ -26,47 +26,47 @@ asdf plugin-add yq https://github.com/sudermanjr/asdf-yq.git # 3.2.3
 # asdf install goss 0.3.13
 # asdf global goss 0.3.13
 
-asdf install fd 8.1.1
-asdf global fd 8.1.1
+asdf install fd 8.2.1
+asdf global fd 8.2.1
 
 asdf install tmux 2.9a
 asdf global tmux 2.9a
 
-asdf install helm 3.3.1
-asdf global helm 3.3.1
+asdf install helm 3.6.3
+asdf global helm 3.6.3
 
-asdf install jsonnet 0.16.0
-asdf global jsonnet 0.16.0
+asdf install jsonnet 0.17.0
+asdf global jsonnet 0.17.0
 
-asdf install k9s 0.24.2
-asdf global k9s 0.24.2
+asdf install k9s 0.24.15
+asdf global k9s 0.24.15
 
-asdf install kubectl 1.18.6
-asdf global kubectl 1.18.6
+asdf install kubectl 1.22.1
+asdf global kubectl 1.22.1
 
-asdf install kubectx 0.9.1
-asdf global kubectx 0.9.1
+asdf install kubectx 0.9.4
+asdf global kubectx 0.9.4
 
-asdf install kubeval 0.15.0
-asdf global kubeval 0.15.0
+asdf install kubeval 0.16.1
+asdf global kubeval 0.16.1
 
-asdf install neovim 0.4.4
-asdf global neovim 0.4.4
+asdf install neovim 0.5.0
+asdf global neovim 0.5.0
 
-asdf install packer 1.6.2
-asdf global packer 1.6.2
+asdf install packer 1.7.4
+asdf global packer 1.7.4
 
-asdf install terraform 0.13.2
-asdf global terraform 0.13.2
+asdf install terraform 1.0.6
+asdf global terraform 1.0.6
 
-asdf install vault 1.5.3
-asdf global vault 1.5.3
+asdf install vault 1.8.2
+asdf global vault 1.8.2
 
-asdf install poetry 1.0.10
-asdf global poetry 1.0.10
+asdf install poetry 1.1.8
+asdf global poetry 1.1.8
 
-asdf install yq v4.5.0
-asdf global yq v4.5.0
+asdf install yq v4.12.2
+asdf global yq v4.12.2
 
 echo " [fd] testing"
 fd --help
