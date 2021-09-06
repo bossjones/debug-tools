@@ -37,7 +37,7 @@ if [[ ! "$PYTHON_INSTALLED" = true ]]; then
     if [[ "$INSTALL_ANACONDA" = true ]]; then
         CONDA_DIR=$HOME/tools/anaconda
         CONDA_NAME=Anaconda.sh
-        CONDA_LINK="https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh"
+        CONDA_LINK="https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh"
     else
         CONDA_DIR=$HOME/tools/miniconda
         CONDA_NAME=Miniconda.sh
@@ -58,9 +58,20 @@ if [[ ! "$PYTHON_INSTALLED" = true ]]; then
 
     # Setting up environment variables
     if [[ "$ADD_TO_SYSTEM_PATH" = true ]]; then
-        echo "export PATH=\"$CONDA_DIR/bin:\$PATH\"" >> "$HOME/.bash_profile"
+        if ! grep -q 'export PATH="$CONDA_DIR/bin:$PATH"' ~/.bash_profile ; then\
+            echo 'export PATH="$CONDA_DIR/bin:$PATH"'  | tee -a ~/.bash_profile  ;\
+            export PATH="$CONDA_DIR/bin:$PATH" ;\
+        fi
+
+        if ! grep -q 'export PATH="$CONDA_DIR/bin:$PATH"' ~/.zsh.d/before/conda.zsh; then\
+            echo 'export PATH="$CONDA_DIR/bin:$PATH"'  | tee -a ~/.zsh.d/before/conda.zsh ;\
+            export PATH="$CONDA_DIR/bin:$PATH" ;\
+        fi
+
+
     fi
-    source "$HOME/.bash_profile"
+
+    exec "$SHELL"
 else
     echo "Python is already installed. Skip installing it."
 fi
@@ -168,10 +179,10 @@ NVIM_CONFIG_DIR=$HOME/.config/nvim
 
 echo "Setting up config and installing plugins"
 if [[ -d "$NVIM_CONFIG_DIR" ]]; then
-    mv "$NVIM_CONFIG_DIR" $NVIM_CONFIG_DIR.backup
+    mv -fv "$NVIM_CONFIG_DIR" $NVIM_CONFIG_DIR.backup
 fi
 
-git clone https://github.com/jdhao/nvim-config.git "$NVIM_CONFIG_DIR"
+git clone https://github.com/jdhao/nvim-config.git "$NVIM_CONFIG_DIR" || true
 
 echo "Installing vim-plug"
 curl -fLo "$NVIM_CONFIG_DIR/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

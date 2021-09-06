@@ -34,7 +34,7 @@ cp -av ~/dev/bossjones/oh-my-tmux/.tmux.conf.local ~/.tmux.conf.local || true
 
 cd ~/dev/bossjones/oh-my-tmux/
 git remote add upstream git@github.com:gpakosz/.tmux.git || true
-git upstream https://github.com/gpakosz/.tmux.git || true
+# git upstream https://github.com/gpakosz/.tmux.git || true
 cd -
 
 mkdir -p ~/.bin || true
