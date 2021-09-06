@@ -78,7 +78,7 @@ sudo chown ${NON_ROOT_USER}:${NON_ROOT_USER} /usr/local/bin/cheat
 [ ! -f "${HOME}/.config/cheat/conf.yml" ] && mkdir -p ~/.config/cheat
 
 set -x
-[ ! -d "${HOME}/.config/cheat/cheatsheets/community" ] && mkdir -p ~/.config/cheat/cheatsheets; git clone https://github.com/cheat/cheatsheets ~/.config/cheat/cheatsheets/community || pushd ~/.config/cheat/cheatsheets/community;git pull;popd
+[ ! -d "${HOME}/.config/cheat/cheatsheets/community" ] && mkdir -p ~/.config/cheat/cheatsheets || true; git clone https://github.com/cheat/cheatsheets ~/.config/cheat/cheatsheets/community || pushd ~/.config/cheat/cheatsheets/community;git pull;popd
 
 cat <<'EOF' > ~/.config/cheat/conf.yml
 ---
@@ -136,7 +136,7 @@ cheatpaths:
     readonly: false                    # if true, `cheat` will not create new cheatsheets here
 
   - name: community
-    path: /home/vagrant/.config/cheat/cheatsheets/community
+    path: /home/${_user}/.config/cheat/cheatsheets/community
     tags: [ community ]
     readonly: true
 
