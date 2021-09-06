@@ -89,8 +89,8 @@ asdf install yq v4.12.2
 asdf global yq v4.12.2
 
 # Install specific version
-asdf install ag latest
-asdf global ag latest
+asdf install ag 2.2.0
+asdf global ag 2.2.0
 
 asdf install aria2 1.36.0
 asdf global aria2 1.36.0
