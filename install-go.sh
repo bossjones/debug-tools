@@ -40,7 +40,10 @@ cd /var/tmp
 
 wget -N https://storage.googleapis.com/golang/go$VERSION.$OS-$ARCH.tar.gz
 
+set -x
+
 if [[ "${OS}" == "Linux" ]]; then
+  sudo mkdir -p /usr/local/go
   sudo tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
   export _whoami=$(whoami)
   sudo chown -Rv ${_whoami}:${_whoami} /usr/local/go
@@ -55,5 +58,7 @@ export GOPATH=/usr/local
 export GOROOT=/usr/local/go
 export PATH=\$PATH:\$GOROOT/bin
 EOF
+
+set +x
 
 exit 0
