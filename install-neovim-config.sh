@@ -24,7 +24,7 @@ function command-exists() {
 }
 
 
-_user=$1
+_user="${1}"
 
 # SOURCE: https://github.com/tkyonezu/Linux-tools/blob/98a373f3756fe9e27d27a8c3cf7d39fd447ea5c1/install-ctop.sh
 
