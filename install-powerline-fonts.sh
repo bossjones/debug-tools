@@ -25,12 +25,12 @@ _DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # source ${_DIR}/install-config
 
 
-git clone git@github.com:bossjones/.tmux.git ~/dev/bossjones/oh-my-tmux || true
+git clone git@github.com:bossjones/.tmux.git ~/dev/bossjones/oh-my-tmux || cd ~/dev/bossjones/oh-my-tmux && git pull --rebase || true
 ln -v -s -f ~/dev/bossjones/oh-my-tmux/.tmux.conf ~/.tmux.conf || true
 cp -av ~/dev/bossjones/oh-my-tmux/.tmux.conf.local ~/.tmux.conf.local || true
 
 
 cd ~/dev/bossjones/oh-my-tmux/
-git remote add upstream git@github.com:gpakosz/.tmux.git
-git upstream https://github.com/gpakosz/.tmux.git
+git remote add upstream git@github.com:gpakosz/.tmux.git || true
+git upstream https://github.com/gpakosz/.tmux.git || true
 cd -

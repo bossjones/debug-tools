@@ -8,6 +8,7 @@ if [ "${OS}" = "Linux" ]; then
   echo "Linux detected"
   echo "[running] sudo chown -R ${_whoami}:${_whoami} /usr/local/src/debug-tools"
   sudo chown -R ${_whoami}:${_whoami} /usr/local/src/debug-tools
+  sudo chown -R ${_whoami}:${_whoami} /usr/local/bin
 fi
 
 pushd /usr/local/src/debug-tools
