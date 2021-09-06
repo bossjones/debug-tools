@@ -130,13 +130,8 @@ cheatpaths:
   # Once downloaded, ensure that 'path' below points to the location at which
   # you downloaded the community cheatsheets.
 
-  - name: behance                   # a name for the cheatpath
-    path: ~/dev/behance/devops-cheatsheets # the path's location on the filesystem
-    tags: [ behance ]               # these tags will be applied to all sheets on the path
-    readonly: false                    # if true, `cheat` will not create new cheatsheets here
-
   - name: community
-    path: /home/${_user}/.config/cheat/cheatsheets/community
+    path: /home/CHANGE_ME/.config/cheat/cheatsheets/community
     tags: [ community ]
     readonly: true
 
@@ -153,6 +148,8 @@ cheatpaths:
   # cheatsheets, and will override less "local" cheatsheets. Likewise,
   # directory-scoped cheatsheets will always be editable ('readonly: false').
 EOF
+
+sed -i "s,CHANGE_ME,${_user},g" ~/.config/cheat/conf.yml
 
 
 cd -
