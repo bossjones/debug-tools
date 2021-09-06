@@ -77,7 +77,8 @@ sudo chown ${NON_ROOT_USER}:${NON_ROOT_USER} /usr/local/bin/cheat
 
 [ ! -f "${HOME}/.config/cheat/conf.yml" ] && mkdir -p ~/.config/cheat
 
-[[ ! -d "${HOME}/.config/cheat/cheatsheets/community" ]] && mkdir -p ~/.config/cheat/cheatsheets; git clone https://github.com/cheat/cheatsheets ~/.config/cheat/cheatsheets/community || pushd ~/.config/cheat/cheatsheets/community;git pull;popd
+set -x
+[ ! -d "${HOME}/.config/cheat/cheatsheets/community" ] && mkdir -p ~/.config/cheat/cheatsheets; git clone https://github.com/cheat/cheatsheets ~/.config/cheat/cheatsheets/community || pushd ~/.config/cheat/cheatsheets/community;git pull;popd
 
 cat <<'EOF' > ~/.config/cheat/conf.yml
 ---
@@ -158,5 +159,7 @@ cd -
 
 logmsg ">>> testing cmd: cheat cp"
 cheat cp
+
+set +x
 
 exit 0
