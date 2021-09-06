@@ -19,6 +19,8 @@ GOSS_DST=${GOSS_DST:-/usr/local/bin}
 INSTALL_LOC="${GOSS_DST%/}/goss"
 DGOSS_INSTALL_LOC="${GOSS_DST%/}/dgoss"
 
+echo "[check] ${OS} = Linux"
+
 if [ "${OS}" = "Linux" ]; then
   echo "Linux detected"
   sudo touch "$INSTALL_LOC" || { echo "ERROR: Cannot write to $GOSS_DST set GOSS_DST elsewhere or use sudo"; exit 1; }
