@@ -24,7 +24,7 @@ _user=$1
 # SOURCE: https://github.com/tkyonezu/Linux-tools/blob/98a373f3756fe9e27d27a8c3cf7d39fd447ea5c1/install-ctop.sh
 
 # Install kubebox
-# https://github.com/kubebox/kubebox/releases
+# https://github.com/astefanutti/kubebox/releases
 
 if [[ "${_user}x" = "x" ]]; then
   NON_ROOT_USER=nobody
@@ -39,7 +39,7 @@ if [ "${SYSTEM}" = "Linux" ]; then
   if [ "${HARDWARE}" = "x86_64" ]; then
     SYSTEM="linux"
     HARDWARE="amd64"
-    URL="https://github.com/astefanutti/kubebox/releases/download/v0.8.0/kubebox-linux"
+    URL="https://github.com/astefanutti/kubebox/releases/download/v0.9.0/kubebox-linux"
     FNAME="kubebox-linux"
   else
     echo "This platform does'nt suppot yet!!"

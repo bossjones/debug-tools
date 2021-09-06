@@ -32,7 +32,7 @@ else
   NON_ROOT_USER=${_user}
 fi
 
-CHEAT_VERSION=4.1.0
+CHEAT_VERSION=4.2.2
 
 HARDWARE=$(uname -m)
 SYSTEM=$(uname -s)
@@ -128,12 +128,12 @@ cheatpaths:
   #
   # Once downloaded, ensure that 'path' below points to the location at which
   # you downloaded the community cheatsheets.
-  
+
   - name: behance                   # a name for the cheatpath
     path: ~/dev/behance/devops-cheatsheets # the path's location on the filesystem
     tags: [ behance ]               # these tags will be applied to all sheets on the path
     readonly: false                    # if true, `cheat` will not create new cheatsheets here
-    
+
   - name: community
     path: /home/vagrant/.config/cheat/cheatsheets/community
     tags: [ community ]

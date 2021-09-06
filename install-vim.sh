@@ -31,7 +31,7 @@ cp -av ~/dev/bossjones/oh-my-vim/.vim.conf.local ~/.vim.conf.local || true
 
 
 cd ~/dev/bossjones/oh-my-vim/
-git remote add upstream git@github.com:gpakosz/.vim.git
-git upstream https://github.com/gpakosz/.vim.git
+git remote add upstream git@github.com:gpakosz/.vim.git || true
+git upstream https://github.com/gpakosz/.vim.git || true
 cd -
 
