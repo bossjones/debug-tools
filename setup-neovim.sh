@@ -82,15 +82,15 @@ echo "Installing Python packages"
 PY_PACKAGES="pynvim jedi pylint flake8 yapf black"
 
 if [[ "$SYSTEM_PYTHON" = true ]]; then
-    echo "Using system Python to install $(PY_PACKAGES)"
+    echo "Using system Python to install ${PY_PACKAGES}"
 
     # If we use system Python, we need to install these Python packages under
     # user HOME, since we do not have permissions to install them under system
     # directories.
-    pip install --user $PY_PACKAGES
+    pip install --user "${PY_PACKAGES}"
 else
-    echo "Using custom Python to install $(PY_PACKAGES)"
-    pip3 install $PY_PACKAGES
+    echo "Using custom Python to install ${PY_PACKAGES}"
+    pip3 install "${PY_PACKAGES}"
 fi
 
 
