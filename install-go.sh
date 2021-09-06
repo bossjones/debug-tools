@@ -40,7 +40,13 @@ cd /var/tmp
 
 wget -N https://storage.googleapis.com/golang/go$VERSION.$OS-$ARCH.tar.gz
 
-tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
+if [[ "${OS}" == "Linux" ]]; then
+  sudo tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
+  export _whoami=$(whoami)
+  sudo chown -Rv ${_whoami}:${_whoami} /usr/local/go
+else
+  tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
+fi
 
 rm go$VERSION.$OS-$ARCH.tar.gz
 
