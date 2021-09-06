@@ -30,4 +30,7 @@ sudo apt-get update && sudo apt-get install yarn -y
 sudo apt-get install gcc g++ make -y
 sudo apt-get install -y nodejs
 
+npm install -g pure-prompt || true
+npm install -g pretty-time-zsh || true
+
 exit 0
