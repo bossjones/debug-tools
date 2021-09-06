@@ -4,13 +4,21 @@ source /usr/local/bin/color-echo-helper
 
 # SOURCE: https://wiki.ubuntu.com/Debug%20Symbol%20Packages
 
+# cat <<EOF >/etc/apt/sources.list.d/ddebs.list
+# deb http://ddebs.ubuntu.com bionic main restricted
+# deb http://ddebs.ubuntu.com bionic multiverse
+# deb http://ddebs.ubuntu.com bionic universe
+# deb http://ddebs.ubuntu.com bionic-updates main restricted
+# deb http://ddebs.ubuntu.com bionic-updates multiverse
+# deb http://ddebs.ubuntu.com bionic-updates universe
+# EOF
 cat <<EOF >/etc/apt/sources.list.d/ddebs.list
-deb http://ddebs.ubuntu.com bionic main restricted
-deb http://ddebs.ubuntu.com bionic multiverse
-deb http://ddebs.ubuntu.com bionic universe
-deb http://ddebs.ubuntu.com bionic-updates main restricted
-deb http://ddebs.ubuntu.com bionic-updates multiverse
-deb http://ddebs.ubuntu.com bionic-updates universe
+deb http://ddebs.ubuntu.com $(lsb_release -cs) main restricted
+deb http://ddebs.ubuntu.com $(lsb_release -cs) multiverse
+deb http://ddebs.ubuntu.com $(lsb_release -cs) universe
+deb http://ddebs.ubuntu.com $(lsb_release -cs)-updates main restricted
+deb http://ddebs.ubuntu.com $(lsb_release -cs)-updates multiverse
+deb http://ddebs.ubuntu.com $(lsb_release -cs)-updates universe
 EOF
 
 cat /etc/apt/sources.list.d/ddebs.list
