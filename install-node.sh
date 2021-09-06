@@ -22,6 +22,6 @@ logmsg ">>> Install Node.js 8.x"
 
 curl -sL https://deb.nodesource.com/setup_14.x | bash -
 
-apt install -y node.js
+sudo apt install -y node.js
 
 exit 0
