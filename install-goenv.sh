@@ -78,3 +78,6 @@ if [ -d ~/.goenv ]; then
   export PATH="$PATH:$GOPATH/bin"
 fi
 goenv install 1.17.6
+
+# See for more:
+# https://github.com/syndbg/goenv/blob/master/INSTALL.md
