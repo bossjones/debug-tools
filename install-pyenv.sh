@@ -70,8 +70,9 @@ case ${OS} in
   *inux)
     sudo apt-get update && \
     sudo apt-get install -y --no-install-recommends git ca-certificates curl && \
-    curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash && \
-    git clone https://github.com/yyuu/pyenv-pip-rehash.git $(pyenv root)/plugins/pyenv-pip-rehash
+    curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+    git clone https://github.com/yyuu/pyenv-pip-rehash.git $(pyenv root)/plugins/pyenv-pip-rehash || true
+    git clone https://github.com/pyenv/pyenv-virtualenvwrapper.git $(pyenv root)/plugins/pyenv-virtualenvwrapper || true
 
     echo -e "${PYENV_VERSIONS_TO_INSTALL}" > ~/python-versions.txt
     pyenv update && \
@@ -96,6 +97,9 @@ if [ -e \$PYENV_ROOT ]; then
 fi
 EOF
 cat $PYENV_ROOT/pyenv.bash
+
+pip install virtualenvwrapper
+source virtualenvwrapper_lazy.sh
 
 
 # Setting up environment variables
