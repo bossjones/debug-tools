@@ -72,7 +72,7 @@ case ${OS} in
     sudo apt-get install -y --no-install-recommends git ca-certificates curl && \
     curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash && \
     git clone https://github.com/yyuu/pyenv-pip-rehash.git $(pyenv root)/plugins/pyenv-pip-rehash
-    
+
     echo -e "${PYENV_VERSIONS_TO_INSTALL}" > ~/python-versions.txt
     pyenv update && \
             xargs -P 4 -n 1 pyenv install < ~/python-versions.txt && \
@@ -80,10 +80,23 @@ case ${OS} in
             find $PYENV_ROOT/versions -type d '(' -name '__pycache__' -o -name 'test' -o -name 'tests' ')' -exec rm -rfv '{}' + && \
             find $PYENV_ROOT/versions -type f '(' -name '*.py[co]' -o -name '*.exe' ')' -exec rm -fv '{}' + && \
             cat ~/python-versions.txt | tee $PYENV_ROOT/version
-    
+
     ;;
   Darwin) OS=darwin;;
   *) echo "${OS}-${ARCH} does'nt supported yet."; exit 1;;
 esac
+
+cat <<EOF >$PYENV_ROOT/pyenv.bash
+if [ -e $PYENV_ROOT ]; then
+  export PYENV_ROOT=~/.pyenv
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+  pyenv virtualenvwrapper_lazy
+fi
+EOF
+cat $PYENV_ROOT/pyenv.bash
+
+
 
 exit 0
