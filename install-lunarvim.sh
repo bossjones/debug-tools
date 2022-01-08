@@ -116,5 +116,13 @@ rm *.zip
 mkdir -p ~/.local/share/fonts || true
 mv -fv *.ttf ~/.local/share/fonts/
 
+
+echo "Installing language servers"
+# https://github.com/LunarVim/LunarVim
+# # nvim +PlugInstall +qall
+# Enter :LspInstall followed by <TAB> to see your options for LSP
+
+# Enter :TSInstall followed by <TAB> to see your options for syntax highlighting
+
 exit 0
 
