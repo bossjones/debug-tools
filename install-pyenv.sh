@@ -99,7 +99,7 @@ cat $PYENV_ROOT/pyenv.bash
 
 
 # Setting up environment variables
-
+set -x
 if ! grep -q 'source $PYENV_ROOT/pyenv.bash' ~/.bash_profile ; then\
     echo 'source $PYENV_ROOT/pyenv.bash'  | tee -a ~/.bash_profile  ;\
     source $PYENV_ROOT/pyenv.bash ;\
@@ -108,6 +108,7 @@ if ! grep -q 'source $PYENV_ROOT/pyenv.bash' ~/.bashrc ; then\
     echo 'source $PYENV_ROOT/pyenv.bash'  | tee -a ~/.bashrc  ;\
     source $PYENV_ROOT/pyenv.bash ;\
 fi
+set +x
 
 # if ! grep -q 'source $PYENV_ROOT/pyenv.bash' ~/.zsh.d/before/conda.zsh; then\
 #     echo 'source $PYENV_ROOT/pyenv.bash'  | tee -a ~/.zsh.d/before/conda.zsh ;\
