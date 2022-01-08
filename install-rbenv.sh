@@ -25,9 +25,11 @@ source ${_DIR}/install-config
 
 export PATH="${RBENV_ROOT}/shims:${RBENV_ROOT}/bin:$PATH"
 
-curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
+sudo apt install -y git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev || true
 
-curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
+curl -fsSL https://raw.githubusercontent.com/rbenv/rbenv-installer/main/bin/rbenv-installer | bash
+
+curl -fsSL https://raw.githubusercontent.com/rbenv/rbenv-installer/main/bin/rbenv-doctor | bash
 
 git clone https://github.com/rbenv/rbenv-vars.git ${RBENV_ROOT}/plugins/rbenv-vars  || echo "already cloned"
 git clone https://github.com/rbenv/ruby-build.git ${RBENV_ROOT}/plugins/ruby-build  || echo "already cloned"
@@ -43,9 +45,9 @@ git clone https://github.com/tpope/rbenv-aliases.git ${RBENV_ROOT}/plugins/rbenv
 if [ -e ${RBENV_ROOT} ]; then
   export PATH="${RBENV_ROOT}/shims:$PATH"
 fi
-if [[ -x $(which -p rbenv) ]]; then
-  eval "$(rbenv init -)"
-fi
+# if [[ -x $(which -p rbenv) ]]; then
+eval "$(rbenv init -)"
+# fi
 
 echo 'gem: --no-rdoc --no-ri' >> ~/.gemrc
 
