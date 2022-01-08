@@ -53,6 +53,7 @@ if [ "${SYSTEM}" = "Linux" ]; then
       /usr/local/bin/install-fonts.sh
       pip3 install pylint
       pip3 install flake8
+      pip3 install wheel
       pip3 install autoflake
       sudo apt install lua5.3 -y
     fi
