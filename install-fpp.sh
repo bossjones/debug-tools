@@ -17,6 +17,7 @@ logmsg() {
   echo ">>> $1"
 }
 
+sudo apt-get install xclip -y
 
 logmsg ">>> Install fpp ${VERSION}"
 cd /var/tmp
