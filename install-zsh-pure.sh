@@ -25,12 +25,20 @@ source ${_DIR}/install-config
 
 # NOTE: these should exist # assumptions: fnm, fzf, and more
 
+# verify pyenv is installed
+pyenv which pip
+# Example output # /home/pi/.pyenv/versions/3.9.0/bin/pip
+
 pyenv rehash
 
 sudo apt-get install -y fzf jq rbenv silversearcher-ag tmux tree direnv
 
 mkdir -p ~/dev/bossjones || true
 git clone git@github.com:bossjones/ansible-role-oh-my-zsh.git ~/dev/bossjones/ansible-role-oh-my-zsh
-cd /dev/bossjones/ansible-role-oh-my-zsh
+cd ~/dev/bossjones/ansible-role-oh-my-zsh
 python3 -m venv .venv
 source .venv/bin/activate
+python --version
+pip install -r requirements.txt
+
+make run-ubuntu-pure
