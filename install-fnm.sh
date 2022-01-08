@@ -27,7 +27,7 @@ curl -fsSL https://github.com/Schniz/fnm/raw/master/.ci/install.sh | bash
 
 # SOURCE: https://github.com/Schniz/fnm
 if [ -n "$(which fnm)" ]; then
-    eval "$(fnm env)"
+    eval "$(fnm env --use-on-cd)"
     if [ "$(fnm ls | grep -i ${NODE_VERSION_TO_INSTALL} | wc -l)" = "0" ]; then
       fnm install ${NODE_VERSION_TO_INSTALL} || true
       fnm use ${NODE_VERSION_TO_INSTALL} || true
