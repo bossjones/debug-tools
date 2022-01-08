@@ -123,6 +123,7 @@ echo "Installing language servers"
 # Enter :LspInstall followed by <TAB> to see your options for LSP
 
 # Enter :TSInstall followed by <TAB> to see your options for syntax highlighting
+# lvim +LvimUpdate +q
 
 exit 0
 
