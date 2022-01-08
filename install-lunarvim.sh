@@ -56,6 +56,8 @@ if [ "${SYSTEM}" = "Linux" ]; then
       pip3 install wheel
       pip3 install autoflake
       sudo apt install lua5.3 -y
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+      source $HOME/.cargo/env
     fi
   else
     echo "This platform does'nt suppot yet!!"
@@ -80,7 +82,28 @@ else
   exit 1
 fi
 
-# bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
+cat <<EOF >~/rust.bash
+if [ -d "\$HOME/.cargo/bin" ]; then
+  export PATH=\$HOME/.cargo/bin:$PATH
+fi
+EOF
+cat ~/rust.bash
+
+# Setting up environment variables
+set -x
+if ! grep -q 'source ~/rust.bash' ~/.bash_profile ; then\
+    echo 'source ~/rust.bash'  | tee -a ~/.bash_profile  ;\
+    source ~/rust.bash ;\
+fi
+if ! grep -q 'source ~/rust.bash' ~/.bashrc ; then\
+    echo 'source ~/rust.bash'  | tee -a ~/.bashrc  ;\
+    source ~/rust.bash ;\
+fi
+
+exec "$SHELL"
+
+set +x
+bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
 
 exit 0
 
