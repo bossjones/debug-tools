@@ -17,7 +17,7 @@ logmsg() {
   echo ">>> $1"
 }
 
-sudo apt-get install xclip -y
+sudo apt-get install xclip urlview -y
 
 logmsg ">>> Install fpp ${VERSION}"
 cd /var/tmp
