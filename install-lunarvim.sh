@@ -26,6 +26,7 @@ function command-exists() {
 
 _user="${1}"
 
+npm install -g diff-so-fancy
 # SOURCE: https://github.com/tkyonezu/Linux-tools/blob/98a373f3756fe9e27d27a8c3cf7d39fd447ea5c1/install-ctop.sh
 
 # Install lunarvim
@@ -104,6 +105,16 @@ exec "$SHELL"
 
 set +x
 bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
+
+mkdir fonts || true
+cd fonts
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Ubuntu.zip
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/UbuntuMono.zip
+unzip Ubuntu.zip
+unzip UbuntuMono.zip
+rm *.zip
+mkdir -p ~/.local/share/fonts || true
+mv -fv *.ttf ~/.local/share/fonts/
 
 exit 0
 
