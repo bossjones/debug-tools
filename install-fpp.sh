@@ -24,8 +24,10 @@ cd /var/tmp
 git clone https://github.com/facebook/PathPicker.git || true
 cd PathPicker/debian
 ./package.sh
-ls ../fpp_0.7.2_noarch.deb
+# ls ../fpp_0.7.2_noarch.deb
 pwd
 cd -
+
+sudo dpkg -i /var/tmp/PathPicker/debian/../pathpicker_0.9.2_all.deb
 
 exit 0
