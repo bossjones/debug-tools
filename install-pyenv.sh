@@ -87,11 +87,11 @@ case ${OS} in
 esac
 
 cat <<EOF >$PYENV_ROOT/pyenv.bash
-if [ -e $PYENV_ROOT ]; then
+if [ -e \$PYENV_ROOT ]; then
   export PYENV_ROOT=~/.pyenv
   export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init --path)"
-  eval "$(pyenv init -)"
+  eval "\$(pyenv init --path)"
+  eval "\$(pyenv init -)"
   pyenv virtualenvwrapper_lazy
 fi
 EOF
