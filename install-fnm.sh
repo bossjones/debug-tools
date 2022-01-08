@@ -29,9 +29,11 @@ curl -fsSL https://github.com/Schniz/fnm/raw/master/.ci/install.sh | bash
 if [ -n "$(which fnm)" ]; then
     eval "$(fnm env --multi)"
     if [ "$(fnm ls | grep -i ${NODE_VERSION_TO_INSTALL} | wc -l)" = "0" ]; then
-      fnm install ${NODE_VERSION_TO_INSTALL}
-      fnm use ${NODE_VERSION_TO_INSTALL}
-      fnm default ${NODE_VERSION_TO_INSTALL}
-      fnm current
+      fnm install ${NODE_VERSION_TO_INSTALL} || true
+      fnm use ${NODE_VERSION_TO_INSTALL} || true
+      fnm default ${NODE_VERSION_TO_INSTALL} || true
+      fnm current || true
+      npm install -g pure-prompt || true
+      npm install -g pretty-time-zsh || true
     fi
 fi
