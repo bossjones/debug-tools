@@ -130,6 +130,19 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
     sudo apt-get install -y libav-tools  libghc-sdl2-dev libsdl2-dev  libsdl2-image-dev libsndifsdl2-dev libsdl2-ttf-dev python3-sdl2
     sudo apt-get install -y libsdl2-mixer-2.0-0
     sudo apt-get install -y libsdl2-mixer-dev
+    sudo apt-get install -y python3-pydub
+
+    sudo apt-get install -y squishyball \
+    libsamplerate0-dev \
+    libsamplerate0 \
+    ladspa-sdk \
+    python3-bitstring \
+    python3-eyed3 \
+    python3-guidata \
+    python3-pdfrw \
+    python3-releases \
+    freqtweak \
+    python3-netaddr
 fi
 
 
