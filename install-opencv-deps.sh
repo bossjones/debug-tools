@@ -223,9 +223,10 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
 
     sudo lshw -C display
     sudo ubuntu-drivers devices
-    logmsg ">>> Is secure boot enabled?"
+    logmsg ">>> Is secure boot enabled, make sure it is disabled."
     sudo mokutil --sb-state
     sudo nvidia-smi
+    sudo systemctl status nvidia-persistenced
 # run these commands afterwards to verify everything is working
 #     $ sudo prime-select query
 # nvidia
