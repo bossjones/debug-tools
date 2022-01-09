@@ -175,7 +175,7 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
     sudo apt-get install python3-numpy python3-scipy python3-matplotlib -y
     sudo apt-get install libhdf5-serial-dev python3-h5py -y
     sudo apt-get install graphviz -y
-    sudo apt-get install python-opencv -y
+    sudo apt-get install python3-opencv -y
     pip install pydot-ng
 
     sudo apt-get install -y aria2 \
