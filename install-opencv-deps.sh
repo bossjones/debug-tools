@@ -196,7 +196,9 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
     sudo apt-get -y install cuda
 
     logmsg ">>> Install cuDNN"
+    logmsg ">>> Download and rsync from https://developer.nvidia.com/rdp/cudnn-download"
     # https://www.nfaicompany.com/how-to-install-keras-and-its-dependencies-on-ubuntu-20-04/
+    # sudo dpkg -i dpkg -i libcudnn6*.deb
     # sudo dpkg -i dpkg -i libcudnn6*.deb
 
     set +x
