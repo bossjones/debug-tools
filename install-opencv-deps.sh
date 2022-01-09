@@ -107,7 +107,7 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
     sudo apt-get update
     sudo apt-get install youtube-dl -y
     sudo apt install imagemagick -y
-    sudo apt install fdupes  libimage-exiftool-perl icu-devtools icu-doc libicu-dev readline -y
+    sudo apt install fdupes  libimage-exiftool-perl icu-devtools icu-doc libicu-dev -y
     sudo apt-get install -y libxslt-dev perl doxygen
     sudo apt-get install -y hdf5-tools
     sudo apt-get install -y libjpeg-dev
