@@ -83,6 +83,8 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
     yasm \
     zlib1g-dev -y
 
+    sudo apt install libopus-dev libmp3lame-dev libfdk-aac-dev libvpx-dev libx264-dev yasm libass-dev libtheora-dev libvorbis-dev mercurial cmake build-essential -y
+
     sudo apt install nasm  -y
     sudo apt install  libx264-dev  -y
     sudo apt install  libx265-dev libnuma-dev  -y
@@ -114,7 +116,7 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
     sudo apt-get install -y libpng-dev
     sudo apt-get install -y libtiff-dev
     sudo apt-get install -y openexr libeigen3-dev libbtbb-dev libbtbb1  libmkl-tbb-thread libtbb-dev libtbb2
-    sudo apt-get install numpy libopenblas-dev -y
+    sudo apt-get install python3-numpy libopenblas-dev -y
     sudo apt-get install -y libomp-dev
     sudo apt-get install -y openmpi-bin tcl-dev
     sudo apt install sqlite3 -y
