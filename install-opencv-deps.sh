@@ -127,7 +127,7 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
     sudo add-apt-repository -y ppa:alex-p/tesseract-ocr5
     sudo apt-get update
     sudo apt install -y tesseract-ocr nmap
-    sudo apt-get install -y libav-tools  libghc-sdl2-dev libsdl2-dev  libsdl2-image-dev libsndifsdl2-dev libsdl2-ttf-dev python3-sdl2
+    sudo apt-get install -y libavcodec-dev libavcodec-extra libghc-sdl2-dev libsdl2-dev  libsdl2-image-dev libsndifsdl2-dev libsdl2-ttf-dev python3-sdl2
     sudo apt-get install -y libsdl2-mixer-2.0-0
     sudo apt-get install -y libsdl2-mixer-dev
     sudo apt-get install -y python3-pydub
@@ -143,6 +143,32 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
     python3-releases \
     freqtweak \
     python3-netaddr
+
+    # SOURCE: https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
+    sudo apt-get update -qq && sudo apt-get -y install \
+    autoconf \
+    automake \
+    build-essential \
+    cmake \
+    git-core \
+    libass-dev \
+    libfreetype6-dev \
+    libgnutls28-dev \
+    libmp3lame-dev \
+    libsdl2-dev \
+    libtool \
+    libva-dev \
+    libvdpau-dev \
+    libvorbis-dev \
+    libxcb1-dev \
+    libxcb-shm0-dev \
+    libxcb-xfixes0-dev \
+    meson \
+    ninja-build \
+    pkg-config \
+
+
+    sudo apt install libunistring-dev libaom-dev libdav1d-dev -y
 fi
 
 
