@@ -106,8 +106,30 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
     sudo add-apt-repository -y ppa:nilarimogard/webupd8
     sudo apt-get update
     sudo apt-get install youtube-dl -y
-
+    sudo apt install imagemagick -y
+    sudo apt install fdupes  libimage-exiftool-perl icu-devtools icu-doc libicu-dev readline -y
+    sudo apt-get install -y libxslt-dev perl doxygen
+    sudo apt-get install -y hdf5-tools
+    sudo apt-get install -y libjpeg-dev
+    sudo apt-get install -y libpng-dev
+    sudo apt-get install -y libtiff-dev
+    sudo apt-get install -y openexr libeigen3-dev libbtbb-dev libbtbb1  libmkl-tbb-thread libtbb-dev libtbb2
+    sudo apt-get install numpy libopenblas-dev -y
+    sudo apt-get install -y libomp-dev
+    sudo apt-get install -y openmpi-bin tcl-dev
+    sudo apt install sqlite3 -y
+    sudo apt-get install -y xz-utils
+    sudo apt install zlib1g-dev -y
+    sudo apt-get install -y libmagic-dev libffi-dev
+    sudo apt-get install -y atomicparsley tree
+    sudo add-apt-repository -y ppa:alex-p/tesseract-ocr5
+    sudo apt-get update
+    sudo apt install -y tesseract-ocr nmap
+    sudo apt-get install -y libav-tools  libghc-sdl2-dev libsdl2-dev  libsdl2-image-dev libsndifsdl2-dev libsdl2-ttf-dev python3-sdl2
+    sudo apt-get install -y libsdl2-mixer-2.0-0
+    sudo apt-get install -y libsdl2-mixer-dev
 fi
+
 
 
 exit 0
