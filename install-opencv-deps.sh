@@ -170,7 +170,7 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
     pkg-config \
 
 
-    sudo apt install libunistring-dev libaom-dev libdav1d-dev -y
+    sudo apt install libunistring-dev libaom-dev -y
     sudo apt-get install build-essential cmake git unzip pkg-config libopenblas-dev  liblapack-dev -y
     sudo apt-get install python3-numpy python3-scipy python3-matplotlib -y
     sudo apt-get install libhdf5-serial-dev python3-h5py -y
@@ -184,8 +184,8 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
     libaria2-0-dev
 
 
-
-
+    logmsg ">>> Installing prereqs cuda"
+    # https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=20.04&target_type=deb_local
 
     wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
     sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
@@ -194,6 +194,10 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
     sudo apt-key add /var/cuda-repo-ubuntu2004-11-5-local/7fa2af80.pub
     sudo apt-get update
     sudo apt-get -y install cuda
+
+    logmsg ">>> Install cuDNN"
+    # https://www.nfaicompany.com/how-to-install-keras-and-its-dependencies-on-ubuntu-20-04/
+    # sudo dpkg -i dpkg -i libcudnn6*.deb
 
     set +x
 fi
