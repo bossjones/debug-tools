@@ -104,6 +104,7 @@ fi
 
 if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
     logmsg ">>> Installing prereqs youtube-dl"
+    sudo apt-get install linux-headers-$(uname -r) -y
     # https://github.com/opencv-deps/opencv-deps/wiki/Common-build-problems
     sudo add-apt-repository -y ppa:nilarimogard/webupd8
     sudo apt-get update
@@ -142,8 +143,8 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
     python3-guidata \
     python3-pdfrw \
     python3-releases \
-    freqtweak \
     python3-netaddr
+    # freqtweak \
 
     # SOURCE: https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
     sudo apt-get update -qq && sudo apt-get -y install \
@@ -170,6 +171,30 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
 
 
     sudo apt install libunistring-dev libaom-dev libdav1d-dev -y
+    sudo apt-get install build-essential cmake git unzip pkg-config libopenblas-dev  liblapack-dev -y
+    sudo apt-get install python3-numpy python3-scipy python3-matplotlib -y
+    sudo apt-get install libhdf5-serial-dev python3-h5py -y
+    sudo apt-get install graphviz -y
+    sudo apt-get install python-opencv -y
+    pip install pydot-ng
+
+    sudo apt-get install -y aria2 \
+    libaria2 \
+    libaria2-0 \
+    libaria2-0-dev
+
+
+
+
+
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+    sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+    wget https://developer.download.nvidia.com/compute/cuda/11.5.1/local_installers/cuda-repo-ubuntu2004-11-5-local_11.5.1-495.29.05-1_amd64.deb
+    sudo dpkg -i cuda-repo-ubuntu2004-11-5-local_11.5.1-495.29.05-1_amd64.deb
+    sudo apt-key add /var/cuda-repo-ubuntu2004-11-5-local/7fa2af80.pub
+    sudo apt-get update
+    sudo apt-get -y install cuda
+
     set +x
 fi
 
