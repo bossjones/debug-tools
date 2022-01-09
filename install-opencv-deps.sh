@@ -126,6 +126,7 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
     sudo apt-get install -y atomicparsley tree
     sudo add-apt-repository -y ppa:alex-p/tesseract-ocr5
     sudo apt-get update
+    set -x
     sudo apt install -y tesseract-ocr nmap
     sudo apt-get install -y libavcodec-dev libavcodec-extra libghc-sdl2-dev libsdl2-dev  libsdl2-image-dev libsndifsdl2-dev libsdl2-ttf-dev python3-sdl2
     sudo apt-get install -y libsdl2-mixer-2.0-0
@@ -169,6 +170,7 @@ if [[ "$(echo ${UNAME_A} | grep -i 'ubuntu' | wc -l)" = "1" ]]; then
 
 
     sudo apt install libunistring-dev libaom-dev libdav1d-dev -y
+    set +x
 fi
 
 
