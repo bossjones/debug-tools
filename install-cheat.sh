@@ -150,7 +150,9 @@ cheatpaths:
 EOF
 
 sed -i "s,CHANGE_ME,${_user},g" ~/.config/cheat/conf.yml
-
+mkdir -p ~/.local/bin
+wget -O ~/.local/bin/cheatsheets https://raw.githubusercontent.com/cheat/cheat/master/scripts/git/cheatsheets
+chmod +x ~/.local/bin/cheatsheets
 
 cd -
 
