@@ -9,12 +9,25 @@ if [ "${OS}" = "Linux" ]; then
     echo "Linux detected"
     sudo apt-get install libpcre2-dev -y
     sudo apt-get install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+    
+    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.9.0 || true
 fi
 
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0 || true
-
+set -x
 echo "[asdf] enable"
-. $HOME/.asdf/asdf.sh
+export OPT_HOMEBREW="/opt/homebrew"
+if [[ -s "$OPT_HOMEBREW"/bin/brew ]]; then
+    eval "$($OPT_HOMEBREW/bin/brew shellenv)"
+fi
+
+if [[ -s "$HOMEBREW_PREFIX"/opt/asdf/libexec/asdf.sh ]]; then
+    . "$HOMEBREW_PREFIX"/opt/asdf/libexec/asdf.sh
+elif [[ -s "$HOME/.asdf/asdf.sh" ]]; then
+    . "$HOME"/.asdf/asdf.sh
+fi
+set +x
+
+set -e
 
 # asdf plugin-add 1password https://github.com/samtgarson/asdf-1password.git # 1.6.0
 # asdf plugin add goss https://github.com/raimon49/asdf-goss.git # 0.3.13
@@ -26,7 +39,9 @@ asdf plugin-add jsonnet https://github.com/Banno/asdf-jsonnet.git # 0.16.0
 asdf plugin-add k9s https://github.com/looztra/asdf-k9s # 0.21.7
 asdf plugin-add kubectl https://github.com/Banno/asdf-kubectl.git # 1.18.6
 asdf plugin add kubectx # 0.9.1
-asdf plugin-add kubeval https://github.com/stefansedich/asdf-kubeval # 0.15.0
+if [ "${OS}" = "Linux" ]; then
+    asdf plugin-add kubeval https://github.com/stefansedich/asdf-kubeval # 0.15.0
+fi
 asdf plugin-add neovim # 0.4.4
 asdf plugin-add packer https://github.com/Banno/asdf-hashicorp.git # 1.6.2
 asdf plugin-add terraform https://github.com/Banno/asdf-hashicorp.git # 0.13.2
@@ -68,11 +83,13 @@ asdf global kubectl 1.22.1
 asdf install kubectx 0.9.4
 asdf global kubectx 0.9.4
 
-asdf install kubeval 0.16.1
-asdf global kubeval 0.16.1
+if [ "${OS}" = "Linux" ]; then
+    asdf install kubeval 0.16.1
+    asdf global kubeval 0.16.1
+fi
 
-asdf install neovim 0.5.0
-asdf global neovim 0.5.0
+asdf install neovim 0.6.0
+asdf global neovim 0.6.0
 
 asdf install packer 1.7.4
 asdf global packer 1.7.4
@@ -86,15 +103,17 @@ asdf global vault 1.8.2
 asdf install poetry 1.1.8
 asdf global poetry 1.1.8
 
-asdf install yq v4.12.2
-asdf global yq v4.12.2
+asdf install yq 4.12.2
+asdf global yq 4.12.2
 
 # Install specific version
 asdf install ag 2.2.0
 asdf global ag 2.2.0
 
-asdf install aria2 1.36.0
-asdf global aria2 1.36.0
+if [ "${OS}" = "Linux" ]; then
+    asdf install aria2 1.36.0
+    asdf global aria2 1.36.0
+fi
 
 asdf install dive 0.10.0
 asdf global dive 0.10.0
@@ -161,3 +180,6 @@ yq --version
 
 echo " [ag] testing"
 ag --help
+
+
+set +e
