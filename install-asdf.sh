@@ -21,7 +21,13 @@ if [[ -s "$OPT_HOMEBREW"/bin/brew ]]; then
 fi
 
 if [[ -s "$HOMEBREW_PREFIX"/opt/asdf/libexec/asdf.sh ]]; then
+    ASDF_DIR="${HOMEBREW_PREFIX}/opt/asdf/libexec"
+    ASDF_COMPLETIONS="$ASDF_DIR/completions"
     . "$HOMEBREW_PREFIX"/opt/asdf/libexec/asdf.sh
+    
+    fpath=(${ASDF_DIR}/completions $fpath)
+    # autoload -Uz compinit
+    # compinit
 elif [[ -s "$HOME/.asdf/asdf.sh" ]]; then
     . "$HOME"/.asdf/asdf.sh
 fi

@@ -14,7 +14,7 @@ set -e
 # All Rights Reserved.
 #-----------------------------------------------------------------------
 
-install-asdf.sh
+# install-asdf.sh
 
 logmsg() {
     echo ">>> $1"
