@@ -34,7 +34,9 @@ else
   exit 1
 fi
 
-curl -L https://github.com/bcicen/ctop/releases/download/v${CTOP_VERSION}/ctop-${CTOP_VERSION}-${SYSTEM}-${HARDWARE} -o /usr/local/bin/ctop
+set -x
+curl -L https://github.com/bcicen/ctop/releases/download/${CTOP_VERSION}/ctop-${CTOP_VERSION}-${SYSTEM}-${HARDWARE} -o /usr/local/bin/ctop
+set +x
 
 chmod +x /usr/local/bin/ctop
 
