@@ -25,6 +25,8 @@ source ${_DIR}/install-config
 
 export PATH="${RBENV_ROOT}/shims:${RBENV_ROOT}/bin:$PATH"
 
+install-ctags.sh
+
 sudo apt install -y git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev || true
 
 curl -fsSL https://raw.githubusercontent.com/rbenv/rbenv-installer/main/bin/rbenv-installer | bash
