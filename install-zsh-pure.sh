@@ -38,7 +38,9 @@ git clone git@github.com:bossjones/ansible-role-oh-my-zsh.git ~/dev/bossjones/an
 cd ~/dev/bossjones/ansible-role-oh-my-zsh
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -U pip
+python3 -c "import sys;print(sys.executable)"
+pip install -U pip wheel setuptools
+pip install pip-tools pipdeptree --upgrade
 python --version
 pip install -r requirements.txt
 

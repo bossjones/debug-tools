@@ -23,4 +23,4 @@ _DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 source ${_DIR}/install-config
 
-apt install peco -y
+sudo apt install peco -y
