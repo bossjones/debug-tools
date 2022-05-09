@@ -39,7 +39,7 @@ sudo apt install tigervnc-xorg-extension -y
 sudo apt install xterm -y
 
 logmsg "start up vncserver"
-vncserver -localhost no
+vncserver -localhost no :1
 
 logmsg "check that vncserver is running"
 vncserver -list
@@ -51,7 +51,7 @@ vncserver -kill :1
 # mkdir -p /etc/systemd/system/kubelet.service.d
 cat ~/.vnc/xstartup || true
 cat <<EOF >~/.vnc/xstartup
-#!/bin/sh
+#!/bin/sh -x
 [ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
 [ -r \${HOME}/.Xresources ] && xrdb \${HOME}/.Xresources
 
@@ -64,7 +64,7 @@ vncserver -kill $DISPLAY
 
 sudo mkdir -p /etc/vnc || true
 sudo out=/etc/vnc/xstartup sh -c 'cat << EOF > $out
-#!/bin/sh
+#!/bin/sh -x
 
 test x"\$SHELL" = x"" && SHELL=/bin/bash
 test x"\$1"     = x"" && set -- default
