@@ -20,6 +20,7 @@ logmsg() {
 
 
 _user=$1
+_skip_config=$2
 
 # SOURCE: https://github.com/tkyonezu/Linux-tools/blob/98a373f3756fe9e27d27a8c3cf7d39fd447ea5c1/install-ctop.sh
 
@@ -30,6 +31,12 @@ if [[ "${_user}x" = "x" ]]; then
   NON_ROOT_USER=nobody
 else
   NON_ROOT_USER=${_user}
+fi
+
+if [[ "${_skip_config}x" = "x" ]]; then
+  SKIP_CONFIG="configure"
+else
+  SKIP_CONFIG="skip"
 fi
 
 CHEAT_VERSION=4.2.2
@@ -67,9 +74,9 @@ fi
 cd /usr/local/bin
 
 if [ ! -f /usr/local/bin/cheat ]; then
-  curl -L "https://github.com/cheat/cheat/releases/download/${CHEAT_VERSION}/cheat-${SYSTEM}-${HARDWARE}.gz" > cheat-${SYSTEM}-${HARDWARE}.gz
-  gzip -d cheat-${SYSTEM}-${HARDWARE}.gz
-  mv cheat-${SYSTEM}-${HARDWARE} cheat
+  curl -L "https://github.com/cheat/cheat/releases/download/${CHEAT_VERSION}/cheat-${SYSTEM}-${HARDWARE}.gz" | sudo tee cheat-${SYSTEM}-${HARDWARE}.gz
+  sudo gzip -d cheat-${SYSTEM}-${HARDWARE}.gz
+  sudo mv cheat-${SYSTEM}-${HARDWARE} cheat
 fi
 
 sudo chmod +x /usr/local/bin/cheat
@@ -80,6 +87,7 @@ sudo chown ${NON_ROOT_USER}:${NON_ROOT_USER} /usr/local/bin/cheat
 set -x
 [ ! -d "${HOME}/.config/cheat/cheatsheets/community" ] && mkdir -p ~/.config/cheat/cheatsheets || true; git clone https://github.com/cheat/cheatsheets ~/.config/cheat/cheatsheets/community || pushd ~/.config/cheat/cheatsheets/community;git pull;popd
 
+if [[ "${SKIP_CONFIG}" = "configure" ]]; then
 cat <<'EOF' > ~/.config/cheat/conf.yml
 ---
 # The editor to use with 'cheat -e <sheet>'. Defaults to $EDITOR or $VISUAL.
@@ -148,9 +156,10 @@ cheatpaths:
   # cheatsheets, and will override less "local" cheatsheets. Likewise,
   # directory-scoped cheatsheets will always be editable ('readonly: false').
 EOF
+fi
 
 sed -i "s,CHANGE_ME,${_user},g" ~/.config/cheat/conf.yml
-mkdir -p ~/.local/bin
+mkdir -p ~/.local/bin || true
 wget -O ~/.local/bin/cheatsheets https://raw.githubusercontent.com/cheat/cheat/master/scripts/git/cheatsheets
 chmod +x ~/.local/bin/cheatsheets
 
