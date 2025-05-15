@@ -368,15 +368,15 @@ Group=${EXPORTER_GROUP}
 ExecStart=${exec_start}
 WatchdogSec=5m
 Restart=always
-# And a number of security settings to lock down the program somewhat.
-NoNewPrivileges=true
-ProtectSystem=strict
-ProtectClock=true
-ProtectKernelTunables=true
-ProtectKernelModules=true
-ProtectKernelLogs=true
-ProtectControlGroups=true
-MemoryDenyWriteExecute=true
+# # And a number of security settings to lock down the program somewhat.
+# NoNewPrivileges=true
+# ProtectSystem=strict
+# ProtectClock=true
+# ProtectKernelTunables=true
+# ProtectKernelModules=true
+# ProtectKernelLogs=true
+# ProtectControlGroups=true
+# MemoryDenyWriteExecute=true
 SyslogLevel=warning
 SyslogLevelPrefix=false
 EOF
