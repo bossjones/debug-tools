@@ -5,7 +5,7 @@
 # This script creates the necessary Proxmox user, API token, and configuration
 # This script is idempotent - it can be run multiple times to update configurations
 
-set -e
+# set -e
 
 # Terminal colors
 RED='\033[0;31m'
@@ -223,7 +223,7 @@ echo -e "${YELLOW}Reloading systemd configuration and restarting service...${NC}
 systemctl daemon-reload
 systemctl enable prometheus-pve-exporter
 systemctl restart prometheus-pve-exporter
-systemctl status prometheus-pve-exporter || true
+systemctl status --no-pager prometheus-pve-exporter || true
 
 # Function to print summary
 print_summary() {
