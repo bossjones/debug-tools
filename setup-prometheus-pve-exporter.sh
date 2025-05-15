@@ -17,33 +17,30 @@ PVE_CONFIG_FILE="${PVE_CONFIG_DIR}/config.yaml"
 SYSTEMD_UNIT_FILE="/etc/systemd/system/prometheus-pve-exporter.service"
 VENV_PATH="/opt/prometheus-pve-exporter"
 
-# Helper function to check if a command succeeds silently
-command_exists() {
-  "$@" &> /dev/null
-  return $?
-}
-
 # Install required packages
 echo "Installing required packages..."
 apt-get update
 apt-get install -y python3-venv
 
 # Check if Proxmox user exists, create if it doesn't
-if ! command_exists pveum user list | grep -q "${PVE_USER}"; then
+if pveum user list | grep -q "${PVE_USER}"; then
+  echo "Proxmox user ${PVE_USER} already exists, skipping creation."
+else
   echo "Creating Proxmox user for monitoring..."
   pveum user add ${PVE_USER} --password "TemporaryPassword123" --comment "API User for Prometheus monitoring"
 
   # Set user permissions (PVEAuditor role for read-only access)
   echo "Setting permissions for ${PVE_USER}..."
   pveum acl modify / -user ${PVE_USER} -role PVEAuditor
-else
-  echo "Proxmox user ${PVE_USER} already exists, skipping creation."
 fi
 
-# Check if token exists, create if it doesn't
-TOKEN_EXISTS=$(pveum user token list ${PVE_USER} 2>/dev/null | grep -c "${PVE_TOKEN_ID}" || echo "0")
+# Check if token exists using a more reliable method
+TOKEN_EXISTS=0
+if pveum user token list ${PVE_USER} 2>/dev/null | grep -q "${PVE_TOKEN_ID}"; then
+  TOKEN_EXISTS=1
+fi
 
-if [ "$TOKEN_EXISTS" -eq "0" ]; then
+if [ $TOKEN_EXISTS -eq 0 ]; then
   echo "Creating API token for ${PVE_USER}..."
   TOKEN_INFO=$(pveum user token add ${PVE_USER} ${PVE_TOKEN_ID} --comment "Token for Prometheus monitoring")
 
@@ -70,19 +67,42 @@ EOF
   chmod 600 ${PVE_TOKEN_OUTPUT}
 else
   echo "API token ${PVE_TOKEN_ID} for ${PVE_USER} already exists."
-  echo "Note: Token values can only be retrieved at creation time."
-  echo "If you need a new token, please delete the existing one first:"
-  echo "  pveum user token remove ${PVE_USER} ${PVE_TOKEN_ID}"
 
   if [ -f "${PVE_TOKEN_OUTPUT}" ]; then
     echo "Using token information from ${PVE_TOKEN_OUTPUT}..."
+    # Source the file to get the token value
     source ${PVE_TOKEN_OUTPUT}
     TOKEN_VALUE="${PVE_TOKEN_VALUE}"
   else
-    echo "ERROR: Cannot find token value. Token file ${PVE_TOKEN_OUTPUT} does not exist."
-    echo "Please delete the existing token and run this script again, or manually create"
-    echo "the token and update ${PVE_TOKEN_OUTPUT} with the token value."
-    exit 1
+    echo "Warning: Token exists but ${PVE_TOKEN_OUTPUT} does not exist."
+    echo "Removing existing token and creating a new one..."
+    pveum user token remove ${PVE_USER} ${PVE_TOKEN_ID}
+
+    # Create a new token
+    echo "Creating new API token for ${PVE_USER}..."
+    TOKEN_INFO=$(pveum user token add ${PVE_USER} ${PVE_TOKEN_ID} --comment "Token for Prometheus monitoring")
+
+    # Extract the token value
+    TOKEN_VALUE=$(echo "$TOKEN_INFO" | grep -oP "value: \K.*")
+
+    # Save token info to a file for future reference
+    echo "Saving token information to ${PVE_TOKEN_OUTPUT}..."
+    cat > ${PVE_TOKEN_OUTPUT} << EOF
+# Proxmox API token for Prometheus monitoring
+# Created on $(date)
+# User: ${PVE_USER}
+# Token ID: ${PVE_TOKEN_ID}
+#
+# Full API token format for HTTP Authorization header:
+# PVEAPIToken=${PVE_USER}!${PVE_TOKEN_ID}=${TOKEN_VALUE}
+
+PVE_USER="${PVE_USER}"
+PVE_TOKEN_ID="${PVE_TOKEN_ID}"
+PVE_TOKEN_VALUE="${TOKEN_VALUE}"
+EOF
+
+    # Set secure permissions on token file
+    chmod 600 ${PVE_TOKEN_OUTPUT}
   fi
 fi
 
@@ -127,20 +147,11 @@ chmod 600 ${PVE_ENV_FILE}
 if [ ! -d "${VENV_PATH}" ]; then
   echo "Creating Python virtual environment..."
   python3 -m venv ${VENV_PATH}
-  INSTALL_EXPORTER=true
+  echo "Installing prometheus-pve-exporter in virtual environment..."
+  ${VENV_PATH}/bin/pip install prometheus-pve-exporter
 else
   echo "Python virtual environment already exists at ${VENV_PATH}."
-  read -p "Do you want to update the prometheus-pve-exporter? (y/n): " UPDATE_EXPORTER
-  if [[ "${UPDATE_EXPORTER}" =~ ^[Yy]$ ]]; then
-    INSTALL_EXPORTER=true
-  else
-    INSTALL_EXPORTER=false
-  fi
-fi
-
-# Install or update prometheus-pve-exporter in virtual environment
-if [ "${INSTALL_EXPORTER}" = true ]; then
-  echo "Installing/updating prometheus-pve-exporter in virtual environment..."
+  echo "Updating prometheus-pve-exporter in virtual environment..."
   ${VENV_PATH}/bin/pip install --upgrade prometheus-pve-exporter
 fi
 
@@ -205,7 +216,9 @@ systemctl status prometheus-pve-exporter || true
 
 echo ""
 echo "Setup complete!"
-echo "Token information saved to: ${PVE_TOKEN_OUTPUT} (if newly created)"
+if [ -f "${PVE_TOKEN_OUTPUT}" ]; then
+  echo "Token information saved to: ${PVE_TOKEN_OUTPUT}"
+fi
 echo "Config file: ${PVE_CONFIG_FILE}"
 echo "Environment file: ${PVE_ENV_FILE}"
 echo "Systemd unit file: ${SYSTEMD_UNIT_FILE}"
