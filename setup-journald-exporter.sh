@@ -587,7 +587,7 @@ main() {
     fi
 
     # Generate a key name using the current timestamp
-    local key_name="$(date -u +'%Y-%m-%dT%H:%M:%SZ.key')"
+    local key_name="$(date -uIseconds).key"
 
     # Begin installation
     check_systemd_journald
