@@ -34,6 +34,8 @@
 #
 #   -h          Display help message
 #
+#   -d          Dry run mode - show what would be done without making changes
+#
 # EXAMPLES:
 #   # Basic installation with default settings
 #   ./setup-journald-exporter.sh
@@ -46,6 +48,9 @@
 #
 #   # Installation with TLS for remote scraping
 #   ./setup-journald-exporter.sh -C /path/to/cert.pem -K /path/to/key.pem
+#
+#   # Dry run to see what would happen without making changes
+#   ./setup-journald-exporter.sh -d
 #
 #   # Complete example with all options
 #   ./setup-journald-exporter.sh -g prometheus -k /path/to/key -p 9010 \
@@ -104,7 +109,7 @@ DEFAULT_PORT=12345
 # Display help
 help() {
     cat >&2 <<EOF
-Usage: $0 [ -g GROUP ] [ -k KEY_FILE ] [ -C CERTIFICATE ] [ -K PRIVATE_KEY ] [ -p PORT ]
+Usage: $0 [ -g GROUP ] [ -k KEY_FILE ] [ -C CERTIFICATE ] [ -K PRIVATE_KEY ] [ -p PORT ] [ -d ]
 
 Arguments:
 
@@ -127,6 +132,9 @@ Arguments:
 
 -p PORT
     The port number to use for the journald-exporter service (default: ${DEFAULT_PORT}).
+
+-d
+    Dry run mode - print what would be done without making any changes.
 
 -h
     Display this help message.
@@ -155,6 +163,10 @@ check_systemd_journald() {
         echo -e "${RED}Error: systemd-journald is not running. Please ensure both systemd and systemd-journald are running.${NC}"
         exit 1
     fi
+
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        echo -e "${YELLOW}DRY RUN: Would verify systemd-journald is running (✓)${NC}"
+    fi
 }
 
 # Function to determine which fetch command to use
@@ -173,6 +185,13 @@ download_binary() {
     echo -e "${BLUE}Downloading journald-exporter binary...${NC}"
     local remote_url="https://github.com/dead-claudia/journald-exporter/releases/latest/download/journald-exporter"
     local client_type=$(get_fetch_command)
+
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        echo -e "${YELLOW}DRY RUN: Would download journald-exporter from:${NC}"
+        echo -e "${YELLOW}  - ${remote_url}${NC}"
+        echo -e "${YELLOW}DRY RUN: Would install binary to ${BINARY_PATH} with mode 755${NC}"
+        return
+    fi
 
     case $client_type in
         curl)
@@ -208,6 +227,12 @@ download_binary() {
 # Create system user
 create_system_user() {
     echo -e "${BLUE}Creating system user...${NC}"
+
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        echo -e "${YELLOW}DRY RUN: Would create system user 'journald-exporter' with no home directory${NC}"
+        return
+    fi
+
     if ! id -u journald-exporter >/dev/null 2>&1; then
         useradd --system --user-group journald-exporter
         echo -e "${GREEN}User journald-exporter created.${NC}"
@@ -219,6 +244,14 @@ create_system_user() {
 # Create necessary directories
 setup_directories() {
     echo -e "${BLUE}Setting up directories...${NC}"
+
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        echo -e "${YELLOW}DRY RUN: Would create the following directories:${NC}"
+        echo -e "${YELLOW}  - ${JOURNALD_CONFIG_DIR} (mode 755)${NC}"
+        echo -e "${YELLOW}  - ${JOURNALD_KEYS_DIR} (mode 755)${NC}"
+        echo -e "${YELLOW}  - ${PROMETHEUS_KEYS_DIR} (mode 755)${NC}"
+        return
+    fi
 
     # Create main config directory
     mkdir -p "${JOURNALD_CONFIG_DIR}"
@@ -242,6 +275,21 @@ generate_api_key() {
     local -a key_files=("${@:3}")
 
     echo -e "${BLUE}Setting up API key...${NC}"
+
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        if [[ "${#key_files[@]}" -eq 0 ]]; then
+            echo -e "${YELLOW}DRY RUN: Would generate new API key with:${NC}"
+            echo -e "${YELLOW}  - openssl rand -hex 32 > ${JOURNALD_KEYS_DIR}/${key_name}${NC}"
+        else
+            echo -e "${YELLOW}DRY RUN: Would use provided key file:${NC}"
+            echo -e "${YELLOW}  - ${key_files[0]} -> ${JOURNALD_KEYS_DIR}/${key_name}${NC}"
+        fi
+        echo -e "${YELLOW}DRY RUN: Would set permissions to 600 on ${JOURNALD_KEYS_DIR}/${key_name}${NC}"
+        echo -e "${YELLOW}DRY RUN: Would copy key to ${PROMETHEUS_KEYS_DIR}/journald-exporter.key${NC}"
+        echo -e "${YELLOW}DRY RUN: Would set permissions to 640 on ${PROMETHEUS_KEYS_DIR}/journald-exporter.key${NC}"
+        echo -e "${YELLOW}DRY RUN: Would set group to ${group} on ${PROMETHEUS_KEYS_DIR}/journald-exporter.key${NC}"
+        return
+    fi
 
     if [[ "${#key_files[@]}" -eq 0 ]]; then
         echo -e "${BLUE}Generating new API key...${NC}"
@@ -281,6 +329,13 @@ create_systemd_service() {
     # Add TLS parameters if certificates are provided
     if [[ "$use_tls" -eq 1 ]]; then
         exec_start="${exec_start} --certificate ${cert_path} --private-key ${key_path}"
+    fi
+
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        echo -e "${YELLOW}DRY RUN: Would create systemd service file at ${SYSTEMD_UNIT_FILE}${NC}"
+        echo -e "${YELLOW}DRY RUN: Service would use ExecStart=${exec_start}${NC}"
+        echo -e "${YELLOW}DRY RUN: Would set permissions to 644 on ${SYSTEMD_UNIT_FILE}${NC}"
+        return
     fi
 
     cat > "${SYSTEMD_UNIT_FILE}" << EOF
@@ -324,6 +379,15 @@ EOF
 start_service() {
     echo -e "${BLUE}Starting and enabling service...${NC}"
 
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        echo -e "${YELLOW}DRY RUN: Would run the following commands:${NC}"
+        echo -e "${YELLOW}  - systemctl daemon-reload${NC}"
+        echo -e "${YELLOW}  - systemctl enable journald-exporter.service${NC}"
+        echo -e "${YELLOW}  - systemctl restart journald-exporter.service${NC}"
+        echo -e "${YELLOW}  - systemctl status --no-pager journald-exporter.service${NC}"
+        return
+    fi
+
     systemctl daemon-reload
     systemctl enable journald-exporter.service
     systemctl restart journald-exporter.service
@@ -338,6 +402,12 @@ check_service() {
     local key_file="$2"
 
     echo -e "${BLUE}Checking if service is accessible...${NC}"
+
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        echo -e "${YELLOW}DRY RUN: Would check if service is accessible at http://localhost:${port}/metrics${NC}"
+        echo -e "${YELLOW}DRY RUN: Would use basic auth with username 'metrics' and password from ${key_file}${NC}"
+        return
+    fi
 
     local key_content
     key_content=$(cat "${key_file}")
@@ -447,9 +517,10 @@ main() {
     local private_key=""
     local use_tls=0
     local -a key_files=()
+    local DRY_RUN=0
 
     # Parse command line options
-    while getopts ':K:k:g:C:p:h' arg; do
+    while getopts ':K:k:g:C:p:dh' arg; do
         case "$arg" in
             g)
                 # Align with Debian and Ubuntu, but with a size limit of 31 characters
@@ -472,6 +543,10 @@ main() {
             p)
                 [[ "$OPTARG" =~ ^[0-9]+$ ]] || fail 'Port must be a number'
                 port="$OPTARG"
+                ;;
+            d)
+                DRY_RUN=1
+                echo -e "${YELLOW}DRY RUN MODE: No changes will be made${NC}"
                 ;;
             h)
                 help 0
@@ -506,11 +581,18 @@ main() {
     # Handle certificates if provided
     if [[ "$use_tls" -eq 1 ]]; then
         echo -e "${BLUE}Setting up TLS certificates...${NC}"
-        cp "$certificate" "${JOURNALD_CONFIG_DIR}/cert.key"
-        cp "$private_key" "${JOURNALD_CONFIG_DIR}/priv.key"
-        chmod 600 "${JOURNALD_CONFIG_DIR}/cert.key"
-        chmod 600 "${JOURNALD_CONFIG_DIR}/priv.key"
-        echo -e "${GREEN}TLS certificates installed.${NC}"
+
+        if [[ "$DRY_RUN" -eq 1 ]]; then
+            echo -e "${YELLOW}DRY RUN: Would copy TLS certificate from ${certificate} to ${JOURNALD_CONFIG_DIR}/cert.key${NC}"
+            echo -e "${YELLOW}DRY RUN: Would copy TLS private key from ${private_key} to ${JOURNALD_CONFIG_DIR}/priv.key${NC}"
+            echo -e "${YELLOW}DRY RUN: Would set permissions to 600 on certificate and private key${NC}"
+        else
+            cp "$certificate" "${JOURNALD_CONFIG_DIR}/cert.key"
+            cp "$private_key" "${JOURNALD_CONFIG_DIR}/priv.key"
+            chmod 600 "${JOURNALD_CONFIG_DIR}/cert.key"
+            chmod 600 "${JOURNALD_CONFIG_DIR}/priv.key"
+            echo -e "${GREEN}TLS certificates installed.${NC}"
+        fi
     fi
 
     # Generate or copy API key
@@ -526,7 +608,11 @@ main() {
     check_service "$port" "${JOURNALD_KEYS_DIR}/${key_name}"
 
     # Print summary
-    print_summary "${JOURNALD_KEYS_DIR}/${key_name}" "$port" "$use_tls"
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        echo -e "${YELLOW}DRY RUN: Installation simulation complete. No changes were made.${NC}"
+    else
+        print_summary "${JOURNALD_KEYS_DIR}/${key_name}" "$port" "$use_tls"
+    fi
 }
 
 # Run main installation
