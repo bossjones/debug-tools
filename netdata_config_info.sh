@@ -1,5 +1,46 @@
 #!/bin/bash
 
+# =============================================================================
+# USAGE:
+#   sudo ./netdata_config_info.sh
+#
+# DESCRIPTION:
+#   This script collects comprehensive system information needed for configuring
+#   Netdata monitoring on a Proxmox VE host. It gathers details about:
+#   - System and hardware configuration
+#   - Proxmox VE setup and status
+#   - ZFS pools and datasets
+#   - S.M.A.R.T. disk information
+#   - Hardware RAID configuration
+#   - Existing Netdata installation (if present)
+#
+# REQUIREMENTS:
+#   - Must be run as root/sudo
+#   - Minimum 10MB free space in /tmp
+#   - Basic system utilities (lsblk, curl, etc.)
+#   - Optional components that will be checked:
+#     * Proxmox VE tools (pveversion, pvecm, pvesh)
+#     * ZFS utilities (zpool, zfs)
+#     * smartmontools (smartctl)
+#     * Hardware RAID utilities (megacli, perccli, arcconf, ssacli)
+#
+# OUTPUT:
+#   - Detailed information is saved to /tmp/netdata_config_info.txt
+#   - Optional sanitized output (IPs/hostnames masked) can be generated
+#   - Each section is clearly marked and formatted for easy reading
+#
+# FEATURES:
+#   - Automatic detection of installed components
+#   - Timeout protection for long-running commands
+#   - Error handling for missing commands/failed operations
+#   - Sample configuration templates for Netdata components
+#   - Detailed installation and troubleshooting instructions
+#
+# SECURITY NOTE:
+#   The output file may contain sensitive information (IPs, hostnames,
+#   system configuration). Use the sanitized output option when sharing.
+# =============================================================================
+
 # Enhanced script to collect information needed for configuring Netdata monitoring
 # for Proxmox VE, ZFS pools, and S.M.A.R.T. on a Proxmox 8.4 host
 

@@ -1,5 +1,45 @@
 #!/bin/bash
 
+# =============================================================================
+# USAGE:
+#   ./configure_claude_mcp.sh [OPTIONS]
+#
+# DESCRIPTION:
+#   Configures MCP (Multi-Component Protocol) servers for Claude Code using
+#   settings from claude_desktop_config.json. This script automates the setup
+#   of multiple MCP servers with their respective configurations, environment
+#   variables, and command-line arguments.
+#
+# OPTIONS:
+#   -d, --dry-run    Run in dry-run mode - shows commands without executing them
+#
+# REQUIREMENTS:
+#   - jq command-line tool for JSON processing
+#   - Claude Code CLI tool (will be installed if missing)
+#   - Valid claude_desktop_config.json file in the same directory
+#
+# CONFIGURATION FILE FORMAT (claude_desktop_config.json):
+#   {
+#     "mcpServers": {
+#       "server_name": {
+#         "command": "command_to_run",
+#         "args": ["arg1", "arg2"],
+#         "env": {                    # Optional
+#           "ENV_VAR1": "value1",
+#           "ENV_VAR2": "value2"
+#         }
+#       }
+#     }
+#   }
+#
+# EXAMPLES:
+#   # Normal execution
+#   ./configure_claude_mcp.sh
+#
+#   # Dry run to preview changes
+#   ./configure_claude_mcp.sh --dry-run
+# =============================================================================
+
 # Script to configure MCP servers from claude_desktop_config.json for Claude Code
 # Author: Claude
 # Date: May 15, 2025
