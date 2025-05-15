@@ -12,6 +12,7 @@ PVE_TOKEN_ID="monitoring"
 PVE_TOKEN_OUTPUT="/root/prometheus-pve-exporter-token.txt"
 PVE_CONFIG_DIR="/etc/prometheus"
 PVE_ENV_FILE="${PVE_CONFIG_DIR}/prometheus-pve-exporter.env"
+PVE_CONFIG_FILE="${PVE_CONFIG_DIR}/config.yaml"
 SYSTEMD_UNIT_FILE="/etc/systemd/system/prometheus-pve-exporter.service"
 VENV_PATH="/opt/prometheus-pve-exporter"
 
@@ -57,6 +58,19 @@ chmod 600 ${PVE_TOKEN_OUTPUT}
 # Create config directory if it doesn't exist
 mkdir -p ${PVE_CONFIG_DIR}
 
+# Create config.yaml file for the exporter
+echo "Creating config file at ${PVE_CONFIG_FILE}..."
+cat > ${PVE_CONFIG_FILE} << EOF
+default:
+  user: ${PVE_USER}
+  token_name: ${PVE_TOKEN_ID}
+  token_value: ${TOKEN_VALUE}
+  verify_ssl: false
+EOF
+
+# Set secure permissions on config file
+chmod 600 ${PVE_CONFIG_FILE}
+
 # Create environment file for prometheus-pve-exporter
 echo "Creating environment file at ${PVE_ENV_FILE}..."
 cat > ${PVE_ENV_FILE} << EOF
@@ -88,7 +102,7 @@ ${VENV_PATH}/bin/pip install prometheus-pve-exporter
 
 # Install the systemd unit file
 echo "Installing systemd unit file..."
-cat > ${SYSTEMD_UNIT_FILE} << 'EOF'
+cat > ${SYSTEMD_UNIT_FILE} << EOF
 [Unit]
 Description=Prometheus Proxmox VE Exporter
 Documentation=https://github.com/bossjones/prometheus-pve-exporter
@@ -111,7 +125,8 @@ RestartSec=5s
 User=prometheus-pve-exporter
 Group=prometheus-pve-exporter
 
-ExecStart=/opt/prometheus-pve-exporter/bin/prometheus-pve-exporter \
+# The binary name is pve_exporter (corrected from prometheus-pve-exporter)
+ExecStart=${VENV_PATH}/bin/pve_exporter ${PVE_CONFIG_FILE} \
     --collector.status \
     --collector.version \
     --collector.node \
@@ -144,6 +159,7 @@ systemctl status prometheus-pve-exporter
 echo ""
 echo "Setup complete!"
 echo "Token information saved to: ${PVE_TOKEN_OUTPUT}"
+echo "Config file created at: ${PVE_CONFIG_FILE}"
 echo "Environment file created at: ${PVE_ENV_FILE}"
 echo "Systemd unit file installed at: ${SYSTEMD_UNIT_FILE}"
 echo "Virtual environment created at: ${VENV_PATH}"
