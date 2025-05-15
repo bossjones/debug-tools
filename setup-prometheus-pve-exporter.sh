@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# PORTED FROM https://phiptech.com/how-to-configure-prometheus-on-proxmox-for-monitoring/
+
 # Script for setting up Prometheus monitoring on Proxmox
 # Based on prometheus-pve-exporter
 # This script creates the necessary Proxmox user, API token, and configuration
