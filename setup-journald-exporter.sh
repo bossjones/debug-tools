@@ -1,5 +1,81 @@
 #!/bin/bash
 
+#==============================================================================
+# setup-journald-exporter.sh
+#
+# A script for installing and configuring journald-exporter on a Linux system
+# with systemd. This script automates all steps of the manual installation
+# process described in the official documentation.
+#
+# DESCRIPTION:
+#   This script installs journald-exporter, a Prometheus exporter for the
+#   systemd journal, and configures it as a systemd service. It handles binary
+#   installation, user creation, directory setup, key generation, TLS
+#   configuration, and service management.
+#
+# USAGE:
+#   ./setup-journald-exporter.sh [OPTIONS]
+#
+# OPTIONS:
+#   -g GROUP    Set the group that can access the API key (default: root)
+#               Example: -g prometheus
+#
+#   -k KEY_FILE Use a pre-made key file instead of generating one
+#               Example: -k /path/to/your/key
+#
+#   -C CERT     Path to TLS certificate (requires -K)
+#               Example: -C /path/to/cert.pem
+#
+#   -K KEY      Path to TLS private key (requires -C)
+#               Example: -K /path/to/key.pem
+#
+#   -p PORT     Set the port number (default: 12345)
+#               Example: -p 9010
+#
+#   -h          Display help message
+#
+# EXAMPLES:
+#   # Basic installation with default settings
+#   ./setup-journald-exporter.sh
+#
+#   # Installation with custom group for Prometheus
+#   ./setup-journald-exporter.sh -g prometheus
+#
+#   # Installation with custom port
+#   ./setup-journald-exporter.sh -p 9010
+#
+#   # Installation with TLS for remote scraping
+#   ./setup-journald-exporter.sh -C /path/to/cert.pem -K /path/to/key.pem
+#
+#   # Complete example with all options
+#   ./setup-journald-exporter.sh -g prometheus -k /path/to/key -p 9010 \
+#                               -C /path/to/cert.pem -K /path/to/key.pem
+#
+# WHAT THIS SCRIPT DOES:
+#   1. Checks if systemd-journald is running
+#   2. Creates a system user 'journald-exporter'
+#   3. Downloads the latest binary from GitHub
+#   4. Sets up necessary directories and permissions
+#   5. Generates or copies API keys
+#   6. Creates and configures the systemd service
+#   7. Starts and enables the service
+#   8. Verifies the service is accessible
+#   9. Provides a detailed summary and next steps
+#
+# PREREQUISITES:
+#   - Linux system with systemd
+#   - systemd-journald running
+#   - Root/sudo privileges
+#   - curl or wget for downloading
+#   - openssl for key generation
+#
+# Based on manual installation instructions from:
+# https://github.com/dead-claudia/journald-exporter/blob/main/installation.md#manual
+#
+# Copyright 2023 Claudia Meadows (original journald-exporter)
+# Copyright 2025 Setup Script Maintainer (modifications)
+#==============================================================================
+
 # Updated setup-journald-exporter.sh
 # A script for installing and configuring journald-exporter
 # Based on the official manual installation steps from:
