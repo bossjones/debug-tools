@@ -16,6 +16,7 @@ PVE_ENV_FILE="${PVE_CONFIG_DIR}/prometheus-pve-exporter.env"
 PVE_CONFIG_FILE="${PVE_CONFIG_DIR}/config.yaml"
 SYSTEMD_UNIT_FILE="/etc/systemd/system/prometheus-pve-exporter.service"
 VENV_PATH="/opt/prometheus-pve-exporter"
+PVE_USER_PASSWORD="password"
 
 # Install required packages
 echo "Installing required packages..."
@@ -27,7 +28,7 @@ if pveum user list | grep -q "${PVE_USER}"; then
   echo "Proxmox user ${PVE_USER} already exists, skipping creation."
 else
   echo "Creating Proxmox user for monitoring..."
-  pveum user add ${PVE_USER} --password "TemporaryPassword123" --comment "API User for Prometheus monitoring"
+  pveum user add ${PVE_USER} --password "${PVE_USER_PASSWORD}" --comment "API User for Prometheus monitoring"
 
   # Set user permissions (PVEAuditor role for read-only access)
   echo "Setting permissions for ${PVE_USER}..."
