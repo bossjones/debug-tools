@@ -20,6 +20,8 @@ fi
 
 # Start with a clean file
 echo "# Netdata Configuration Information for LLMs" > $OUTPUT_FILE
+echo "# Enhanced script to collect information needed for configuring Netdata monitoring" >> $OUTPUT_FILE
+echo "# for Proxmox VE, ZFS pools, and S.M.A.R.T. on a Proxmox 8.4 host" >> $OUTPUT_FILE
 echo "# Generated on $(date)" >> $OUTPUT_FILE
 echo "# Generated from $(hostname)" >> $OUTPUT_FILE
 echo "" >> $OUTPUT_FILE
@@ -40,12 +42,12 @@ run_command() {
     local title="$1"
     local cmd="$2"
     local timeout_duration="${3:-30}"  # Default timeout of 30 seconds
-    
+
     echo "### $title" >> $OUTPUT_FILE
     echo "Running: $title..."
-    
+
     echo '```' >> $OUTPUT_FILE
-    
+
     # Check if the first word of the command exists
     local first_cmd=$(echo "$cmd" | awk '{print $1}')
     if ! command_exists "$first_cmd"; then
@@ -55,14 +57,14 @@ run_command() {
         # Run the command with timeout
         timeout $timeout_duration bash -c "$cmd" >> $OUTPUT_FILE 2>&1
         local status=$?
-        
+
         if [ $status -eq 124 ]; then
             echo "Command timed out after $timeout_duration seconds: $cmd" >> $OUTPUT_FILE
         elif [ $status -ne 0 ]; then
             echo "Command failed with status $status: $cmd" >> $OUTPUT_FILE
         fi
     fi
-    
+
     echo '```' >> $OUTPUT_FILE
     echo "" >> $OUTPUT_FILE
 }
@@ -72,7 +74,7 @@ add_section "System Information"
 run_command "OS Information" "cat /etc/os-release"
 run_command "System Date and Time" "date"
 run_command "Uptime" "uptime"
-run_command "Proxmox Version" "pveversion -v" 
+run_command "Proxmox Version" "pveversion -v"
 run_command "Kernel Information" "uname -a"
 run_command "CPU Information" "lscpu | grep -E 'Model name|Socket|Thread|CPU\\(s\\)'"
 run_command "Memory Information" "free -h"
@@ -94,12 +96,12 @@ if command_exists pve_exporter; then
     run_command "Prometheus PVE Exporter Config" "cat /etc/default/pve_exporter 2>/dev/null || echo 'PVE exporter config not found'"
 else
     echo "Prometheus PVE Exporter does not appear to be installed." | tee -a $OUTPUT_FILE
-    
+
     # Check if there might be alternative exporters
     if command_exists curl; then
         run_command "Check Default Prometheus PVE Exporter Port" "curl -s http://localhost:9221/metrics | head -n 10 || echo 'No service detected on port 9221'"
     fi
-    
+
     echo "For Netdata to monitor Proxmox VE, you'll need to install prometheus-pve-exporter." | tee -a $OUTPUT_FILE
     echo "Visit: https://github.com/prometheus-pve/prometheus-pve-exporter" >> $OUTPUT_FILE
 fi
@@ -110,7 +112,7 @@ if command_exists netdata; then
     run_command "Netdata Version" "netdata -v"
     run_command "Netdata Service Status" "systemctl status netdata || echo 'Service status not available'"
     run_command "Netdata Main Configuration" "cat /etc/netdata/netdata.conf 2>/dev/null || echo 'Configuration file not found'"
-    
+
     # Check for specific collector configurations
     for config in "/etc/netdata/go.d/prometheus.conf" "/etc/netdata/go.d/zfspool.conf" "/etc/netdata/go.d/smartctl.conf"; do
         if [ -f "$config" ]; then
@@ -134,7 +136,7 @@ if command_exists zpool; then
     run_command "ZFS Pools Status" "zpool status"
     run_command "ZFS Pools I/O Statistics" "zpool iostat -v"
     run_command "ZFS Datasets List" "zfs list"
-    
+
     # Get detailed pool properties for all pools
     pools=$(zpool list -H -o name 2>/dev/null)
     if [ -n "$pools" ]; then
@@ -153,19 +155,19 @@ fi
 add_section "S.M.A.R.T. Information"
 if command_exists smartctl; then
     run_command "smartctl Version" "smartctl --version"
-    
+
     # Get list of disks
     run_command "Physical Disk Devices" "lsblk -o NAME,SIZE,TYPE,MOUNTPOINT,MODEL"
-    
+
     # Check for device-mapper devices which might hide physical disks
     run_command "Device Mapper Status" "dmsetup ls || echo 'dmsetup not available'"
-    
+
     # Get S.M.A.R.T. information for each physical disk
     disks=$(lsblk -dpno name | grep -v "loop\|sr")
     if [ -n "$disks" ]; then
         for disk in $disks; do
             run_command "S.M.A.R.T. capability for $disk" "smartctl -i $disk" 30
-            
+
             # Only run health check if device supports SMART
             if smartctl -i $disk | grep -q "SMART support is: Enabled"; then
                 run_command "S.M.A.R.T. health for $disk" "smartctl -H $disk" 30
@@ -215,7 +217,7 @@ jobs:
     # If the exporter requires authentication, uncomment and update:
     # username: your_username
     # password: your_password
-    
+
     # Optional: Use selector to filter specific metrics
     # selector:
     #   allow:
@@ -251,7 +253,7 @@ jobs:
     #   - /dev/sda
     #   - /dev/sdb
     #   - /dev/nvme0n1  # NVMe devices
-    
+
     # If some devices are failing checks or causing problems, you can exclude them:
     # device_selector:
     #   excludes:
