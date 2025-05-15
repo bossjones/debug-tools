@@ -189,7 +189,7 @@ ExecStart=${VENV_PATH}/bin/pve_exporter ${PVE_CONFIG_FILE} \
     --collector.cluster \
     --collector.resources
 
-ExecStartPre=-/usr/sbin/iptables -A INPUT -p tcp --dport 9221 -m state --state NEW -j ACCEPT
+# ExecStartPre=-/usr/sbin/iptables -A INPUT -p tcp --dport 9221 -m state --state NEW -j ACCEPT
 
 [Install]
 WantedBy=multi-user.target
