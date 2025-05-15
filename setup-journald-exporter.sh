@@ -52,9 +52,12 @@
 #   # Dry run to see what would happen without making changes
 #   ./setup-journald-exporter.sh -d
 #
+#   # Use a custom username for the service
+#   ./setup-journald-exporter.sh -u metrics-user
+#
 #   # Complete example with all options
 #   ./setup-journald-exporter.sh -g prometheus -k /path/to/key -p 9010 \
-#                               -C /path/to/cert.pem -K /path/to/key.pem
+#                               -C /path/to/cert.pem -K /path/to/key.pem -u custom-user
 #
 # WHAT THIS SCRIPT DOES:
 #   1. Checks if systemd-journald is running
@@ -86,7 +89,7 @@
 # Based on the official manual installation steps from:
 # https://github.com/dead-claudia/journald-exporter/blob/main/installation.md#manual
 
-set -euo pipefail
+# set -euo pipefail
 
 # Terminal colors
 RED='\033[0;31m'
@@ -105,11 +108,13 @@ PROMETHEUS_KEYS_DIR="/etc/prometheus-keys"
 SYSTEMD_UNIT_FILE="/etc/systemd/system/journald-exporter.service"
 BINARY_PATH="/usr/sbin/journald-exporter"
 DEFAULT_PORT=12345
+EXPORTER_USER="journald-exporter"
+EXPORTER_GROUP="journald-exporter"
 
 # Display help
 help() {
     cat >&2 <<EOF
-Usage: $0 [ -g GROUP ] [ -k KEY_FILE ] [ -C CERTIFICATE ] [ -K PRIVATE_KEY ] [ -p PORT ] [ -d ]
+Usage: $0 [ -g GROUP ] [ -k KEY_FILE ] [ -C CERTIFICATE ] [ -K PRIVATE_KEY ] [ -p PORT ] [ -u USER ] [ -d ]
 
 Arguments:
 
@@ -132,6 +137,9 @@ Arguments:
 
 -p PORT
     The port number to use for the journald-exporter service (default: ${DEFAULT_PORT}).
+
+-u USER
+    The username and group to create and run the service as (default: ${EXPORTER_USER}).
 
 -d
     Dry run mode - print what would be done without making any changes.
@@ -226,18 +234,18 @@ download_binary() {
 
 # Create system user
 create_system_user() {
-    echo -e "${BLUE}Creating system user...${NC}"
+    echo -e "${BLUE}Creating system user ${EXPORTER_USER}...${NC}"
 
     if [[ "$DRY_RUN" -eq 1 ]]; then
-        echo -e "${YELLOW}DRY RUN: Would create system user 'journald-exporter' with no home directory${NC}"
+        echo -e "${YELLOW}DRY RUN: Would create system user '${EXPORTER_USER}' with group '${EXPORTER_GROUP}' and no home directory${NC}"
         return
     fi
 
-    if ! id -u journald-exporter >/dev/null 2>&1; then
-        useradd --system --user-group journald-exporter
-        echo -e "${GREEN}User journald-exporter created.${NC}"
+    if ! id -u "${EXPORTER_USER}" >/dev/null 2>&1; then
+        useradd --system --user-group "${EXPORTER_USER}"
+        echo -e "${GREEN}User ${EXPORTER_USER} created with group ${EXPORTER_GROUP}.${NC}"
     else
-        echo -e "${GREEN}User journald-exporter already exists.${NC}"
+        echo -e "${GREEN}User ${EXPORTER_USER} already exists.${NC}"
     fi
 }
 
@@ -355,6 +363,8 @@ WantedBy=default.target
 
 [Service]
 Type=notify
+User=${EXPORTER_USER}
+Group=${EXPORTER_GROUP}
 ExecStart=${exec_start}
 WatchdogSec=5m
 Restart=always
@@ -518,9 +528,10 @@ main() {
     local use_tls=0
     local -a key_files=()
     local DRY_RUN=0
+    local exporter_username="${EXPORTER_USER}"
 
     # Parse command line options
-    while getopts ':K:k:g:C:p:dh' arg; do
+    while getopts ':K:k:g:C:p:u:dh' arg; do
         case "$arg" in
             g)
                 # Align with Debian and Ubuntu, but with a size limit of 31 characters
@@ -543,6 +554,12 @@ main() {
             p)
                 [[ "$OPTARG" =~ ^[0-9]+$ ]] || fail 'Port must be a number'
                 port="$OPTARG"
+                ;;
+            u)
+                [[ "$OPTARG" =~ ^[a-z][-a-z0-9]{0,30}$ ]] || fail 'Username is not valid'
+                exporter_username="$OPTARG"
+                EXPORTER_USER="$OPTARG"
+                EXPORTER_GROUP="$OPTARG"
                 ;;
             d)
                 DRY_RUN=1
