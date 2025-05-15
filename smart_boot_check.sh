@@ -297,7 +297,7 @@ run_smart_tests() {
   if [ ! -b "$disk" ]; then
     log_message "${RED}Disk $disk does not exist or is not a block device.${NC}"
     return 1
-  }
+  fi
 
   # Determine if disk is NVMe
   local is_nvme=false
