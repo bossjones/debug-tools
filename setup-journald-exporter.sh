@@ -370,7 +370,6 @@ Restart=always
 Type=simple
 EnvironmentFile=-/etc/default/%N
 EnvironmentFile=-/etc/sysconfig/%N
-EnvironmentFile=/etc/prometheus/prometheus-pve-exporter.env
 KillMode=process
 Delegate=yes
 LimitNPROC=infinity
