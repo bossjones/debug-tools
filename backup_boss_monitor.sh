@@ -34,7 +34,7 @@ sudo ./create_report.sh
 
 # Step 2: Change to the bossjones directory
 echo "Changing to target directory..."
-cd ~/dev/bossjones/
+cd /home/pi/dev/bossjones/
 
 # Step 3: Create the tar archive with all specified files
 echo "Creating tar archive..."
