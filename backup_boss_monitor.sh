@@ -72,7 +72,15 @@ sudo tar -czf boss-monitor.tar.gz \
     /home/pi/.bash_logout \
     /home/pi/.bash_profile \
     /home/pi/.profile \
-    /home/pi/.gitconfig
+    /home/pi/.gitconfig \
+    /etc/pihole/setupVars.conf \
+    /etc/passwd \
+    /etc/group \
+    /etc/hosts \
+    /etc/resolv.conf \
+    /etc/hosts.allow \
+    /etc/hosts.deny
+
 
 # Step 4: Change ownership of the archive to the pi user
 echo "Setting file ownership..."
