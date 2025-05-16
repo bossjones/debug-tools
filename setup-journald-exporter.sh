@@ -362,8 +362,9 @@ AssertPathIsDirectory=${JOURNALD_KEYS_DIR}
 WantedBy=multi-user.target
 
 [Service]
-User=${EXPORTER_USER}
-Group=${EXPORTER_GROUP}
+# Run as root
+#User=${EXPORTER_USER}
+#Group=${EXPORTER_GROUP}
 ExecStart=${exec_start}
 WatchdogSec=5m
 Restart=always
