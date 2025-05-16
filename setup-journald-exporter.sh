@@ -359,15 +359,27 @@ AssertPathIsDirectory=${JOURNALD_KEYS_DIR}
 
 # So it'll run on startup.
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
 
 [Service]
-Type=notify
 User=${EXPORTER_USER}
 Group=${EXPORTER_GROUP}
 ExecStart=${exec_start}
 WatchdogSec=5m
 Restart=always
+Type=simple
+EnvironmentFile=-/etc/default/%N
+EnvironmentFile=-/etc/sysconfig/%N
+EnvironmentFile=/etc/prometheus/prometheus-pve-exporter.env
+KillMode=process
+Delegate=yes
+LimitNPROC=infinity
+LimitCORE=infinity
+TasksMax=infinity
+TimeoutStartSec=0
+Restart=always
+RestartSec=5s
+
 # # And a number of security settings to lock down the program somewhat.
 # NoNewPrivileges=true
 # ProtectSystem=strict
@@ -377,8 +389,8 @@ Restart=always
 # ProtectKernelLogs=true
 # ProtectControlGroups=true
 # MemoryDenyWriteExecute=true
-SyslogLevel=warning
-SyslogLevelPrefix=false
+# SyslogLevel=warning
+# SyslogLevelPrefix=false
 EOF
 
     chmod 644 "${SYSTEMD_UNIT_FILE}"
@@ -521,7 +533,7 @@ print_summary() {
 
 # Main installation process
 main() {
-    local group="root"
+    local group="${EXPORTER_GROUP}"
     local port="${DEFAULT_PORT}"
     local certificate=""
     local private_key=""
