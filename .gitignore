@@ -1,3 +1,4 @@
 .vscode
 install-config
 claude_desktop_config.json
+.node-version
