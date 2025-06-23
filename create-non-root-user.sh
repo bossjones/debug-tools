@@ -220,6 +220,42 @@ get_sudo_group() {
     esac
 }
 
+# Function to modify /etc/sudoers for NOPASSWD access
+modify_sudoers_nopasswd() {
+    local sudoers_file="/etc/sudoers"
+    local backup_file="/etc/sudoers.backup.$(date +%Y%m%d_%H%M%S)"
+    
+    echo "Modifying $sudoers_file to enable NOPASSWD access"
+    
+    # Create backup
+    cp "$sudoers_file" "$backup_file"
+    echo "Created backup: $backup_file"
+    
+    # Create temporary file for modifications
+    local temp_file="/tmp/sudoers.tmp"
+    cp "$sudoers_file" "$temp_file"
+    
+    # Replace the patterns with NOPASSWD versions
+    sed -i 's/^root[[:space:]]\+ALL=(ALL:ALL)[[:space:]]\+ALL$/root ALL=(ALL:ALL) NOPASSWD: ALL/' "$temp_file"
+    sed -i 's/^%admin[[:space:]]\+ALL=(ALL)[[:space:]]\+ALL$/# Members of the admin group may gain root privileges\n%admin ALL=(ALL) NOPASSWD: ALL/' "$temp_file"
+    sed -i 's/^%sudo[[:space:]]\+ALL=(ALL:ALL)[[:space:]]\+ALL$/# Allow members of group sudo to execute any command\n%sudo ALL=(ALL:ALL) NOPASSWD: ALL/' "$temp_file"
+    
+    # Validate the modified sudoers file
+    if visudo -c -f "$temp_file"; then
+        # If validation passes, replace the original
+        cp "$temp_file" "$sudoers_file"
+        echo "Successfully updated $sudoers_file with NOPASSWD access"
+    else
+        echo "Error: Modified sudoers file failed validation"
+        echo "Backup preserved at: $backup_file"
+        rm -f "$temp_file"
+        return 1
+    fi
+    
+    rm -f "$temp_file"
+    return 0
+}
+
 # Function to add user to additional groups
 add_user_to_groups() {
     local username="$1"
@@ -309,6 +345,9 @@ fi
 
 # Install required packages if missing
 install_requirements
+
+# Modify /etc/sudoers for NOPASSWD access
+modify_sudoers_nopasswd
 
 # Platform-specific sudo group handling
 if [[ "$OS" = "Linux" ]]; then
